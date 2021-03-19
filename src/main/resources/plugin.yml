@@ -1,0 +1,108 @@
+main: ${project.groupId}.${project.artifactId}
+name: ${project.name}
+api-version: 1.16
+version: ${project.version}
+description: ${project.description}
+depend:
+  - ProtocolLib
+  - ChatUtilities
+
+commands:
+  ban:
+    usage: </ban> <player name> <time> <reason>
+    description: Ban a player, reason must be specified.
+    permission: moderation.ban
+    permission-message: You don't have permission to run this command.
+  kick:
+    usage: </kick> <player name> <reason>
+    description: Kick a player, for a specific reason.
+    permission: moderation.kick
+    permission-message: You don't have permission to run this command.
+  viewInventory:
+    usage: </viewInventory> <player name>
+    description: View and edit the inventory of someone.
+    permission: moderation.viewInventory
+    permission-message: You don't have permission to run this command.
+  viewEnderChest:
+    usage: </viewEnderChest> <player name>
+    description: View and edit the ender chest of someone.
+    permission: moderation.viewInventory
+    permission-message: You don't have permission to run this command.
+  readBook:
+    usage: </readBook> <book id>
+    description: View a book with a specific id
+    permission: moderation.readbook
+    permission-message: You don't have permission to run this command.
+  removeBan:
+    usage: </removeBan> <player uuid>
+    description: Removes the ban of a player
+    permission: moderation.removeBan
+    permission-message: You don't have permission to run this command.
+  vanish:
+    usage: </vanish>
+    description: Vanish
+  enableSpy:
+    usage: </enableSpy>
+    description: Spy on all players msgs and commands.
+    permission: moderation.spyEnable
+    permission-message: You don't have permission to run this command.
+  disableSpy:
+    usage: </disableSpy>
+    description: disable the spy command
+    permission: moderation.disableEnable
+    permission-message: You don't have permission to run this command.
+  help:
+    usage: </ticketInfo>
+    description: Get informations about the ticket system.
+    permission: moderation.help
+    permission-message: You don't have permission to run this command.
+  helpme:
+    usage: </helpme>
+    description: Apply your ticket.
+    permission: moderation.helpme
+    permission-message: You don't have permission to run this command.
+  helphistory:
+    usage: </ticketHistory>
+    description: View your ticket history
+    permission: moderation.helphistory
+    permission-message: You don't have permission to run this command.
+  viewBansHistory:
+    usage: </viewBansHistory> <player name>
+    description: View the ban history of a player
+    permission: moderation.viewbanhistory
+    permission-message: You don't have permission to run this command.
+  inspectPlayer:
+    usage: </inspectPlayer>
+    description: Inspect a player
+    permission: moderation.inspectPlayer
+    permission-message: You don't have permission to run this command.
+  cancelInspection:
+    usage: </cancelInspection>
+    description: Close the scoreboard
+    permission: moderation.cancelInspection
+    permission-message: You don't have permission to run this command
+  setRules:
+    usage: </setRules>
+    description: Set a new rule book
+    permission: moderation.setRules
+    permission-message: You don't have permission to run this command
+  rules:
+    usage: </rules>
+    description: Get a rule book
+    permission: moderation.rules
+    permission-message: You don't have permission to run this command.
+  who:
+    usage: </who>
+    description: view all players
+    permission: moderation.who
+    permission-message: You don't have permission to run this command.
+  mute:
+    usage: </mute>
+    description: mute a player
+    permission: moderation.mute
+    permission-message: You don't have permission to run this command.
+  unmute:
+    usage: </unmute>
+    description: unmute a player
+    permission: moderation.unMute
+    permission-message: You don't have permission to run this command.

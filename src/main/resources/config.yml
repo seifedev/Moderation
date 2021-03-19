@@ -1,0 +1,32 @@
+useDatabase: false
+useChatUtilitiesPlugin: true
+
+#Database Settings Start
+#If you use a database, it's suggested to create a user solely for this database
+#With a strong password, using a random password generator or other means
+username: username #database user name
+password: password # database password
+database: database # the database name
+hostname: hostname # host name if it's local, use localhost
+
+maximumConnections: 10 #the maximum connections
+minimumConnections: 3 # the minimum idle connections
+port: 3306 #the port of the mysql database
+connectionTimeout: 5000 # time out
+
+secureConnection: true # to use SSL or not
+#Database Settings End
+
+VanishMaxLevel: 10
+
+whoRanks:
+  owner: '&4'
+  staffManager: '&c'
+  gameMaster: '&d'
+  SnrAdmin: '&1'
+  admin: '&9'
+  moderator: '&2'
+  chatMod: '&a'
+  helper: '&3'
+  vip: '&6'
+  member: '&3'
