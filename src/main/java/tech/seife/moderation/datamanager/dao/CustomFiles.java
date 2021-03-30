@@ -1,9 +1,15 @@
 package tech.seife.moderation.datamanager.dao;
 
 import com.google.gson.Gson;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import tech.seife.moderation.Moderation;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,13 +19,38 @@ public class CustomFiles {
 
     private final Moderation plugin;
 
-    private final File bansFile, bansHistoryFile, currentBansFile, mutesFile, mutesHistoryFile, currentMutesFile;
-    private final File kicksFile, spiedText, ticketsFile;
+    private File bansFile, bansHistoryFile, currentBansFile, mutesFile, mutesHistoryFile, currentMutesFile;
+    private File kicksFile, spiedText, ticketsFile, translationFile;
 
-    private final Gson gson;
+    private FileConfiguration translationConfig;
+
+    private Gson gson;
 
     public CustomFiles(Moderation plugin) {
         this.plugin = plugin;
+        
+        translationFile = new File(plugin.getDataFolder(), "translation.yml");
+        createYamlFile(translationFile);
+    }
+
+    private void createYamlFile(File file) {
+        file = new File(plugin.getDataFolder(), file.getName());
+
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+            plugin.saveResource(file.getName(), false);
+        }
+
+        translationConfig = new YamlConfiguration();
+
+        try {
+            translationConfig.load(translationFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            plugin.getLogger().log(Level.WARNING, "Couldn't load translation config file!\nError message: ", e.getMessage());
+        }
+    }
+
+    public Gson createGson(Moderation plugin) {
         gson = new Gson();
 
         bansFile = new File(plugin.getDataFolder(), "bans.json");
@@ -49,7 +80,7 @@ public class CustomFiles {
 
         ticketsFile = new File(plugin.getDataFolder(), "tickets.json");
         createFile(ticketsFile);
-
+        return gson;
     }
 
     private void createFile(File file) {
@@ -57,6 +88,10 @@ public class CustomFiles {
             plugin.saveResource(file.getName(), false);
         }
 
+    }
+
+    public FileConfiguration getTranslationConfig() {
+        return translationConfig;
     }
 
     public Map getBansFile() {

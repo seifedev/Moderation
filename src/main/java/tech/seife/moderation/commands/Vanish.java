@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import tech.seife.moderation.utils.MessageManager;
 
 public class Vanish implements CommandExecutor {
 
@@ -33,6 +34,7 @@ public class Vanish implements CommandExecutor {
             RemoveFromTab removeFromTab = new RemoveFromTab(plugin, plugin.getProtocolManager(), plugin.getCachedData());
             removeFromTab.sendPackets(player, EnumWrappers.PlayerInfoAction.ADD_PLAYER);
         }
+        sender.sendMessage(MessageManager.getTranslatedMessage(plugin, "invisible"));
 
         return true;
     }

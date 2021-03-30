@@ -1,6 +1,8 @@
 package tech.seife.moderation.commands.mutes;
 
 import tech.seife.moderation.Moderation;
+import tech.seife.moderation.enums.ReplaceType;
+import tech.seife.moderation.utils.MessageManager;
 import tech.seife.moderation.utils.ParseDate;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -10,6 +12,8 @@ import org.bukkit.entity.Player;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class MutePlayer implements CommandExecutor {
@@ -32,10 +36,14 @@ public class MutePlayer implements CommandExecutor {
                 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
                 LocalDateTime muteReleaseDate = LocalDateTime.parse(ParseDate.transformInputToDateInstant(args[2]), dateTimeFormatter);
 
-                Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getMutedPlayerManager().addMutedPlayer(mutedBy.getUniqueId(), mutedPlayer.getUniqueId(), mutedBy.getName(), mutedPlayer.getName(), plugin.getChatUtilities().getChannelManager().getChannel(args[1]).getName(), LocalDateTime.now(), muteReleaseDate));
+                String channelName = plugin.getChatUtilities().getChannelManager().getChannel(args[1]).getName();
 
-                mutedPlayer.sendMessage("You have been muted in " + plugin.getChatUtilities().getChannelManager().getChannel(args[1]).getName() +" for " + args[2]);
-                mutedBy.sendMessage(mutedPlayer.getDisplayName() + " has been muted in: " + plugin.getChatUtilities().getChannelManager().getChannel(args[1]).getName() + " for " +  args[2]);
+                Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getMutedPlayerManager().addMutedPlayer(mutedBy.getUniqueId(), mutedPlayer.getUniqueId(), mutedBy.getName(), mutedPlayer.getName(), channelName, LocalDateTime.now(), muteReleaseDate));
+
+                mutedPlayer.sendMessage(getMessage(mutedPlayer.getDisplayName(), mutedBy.getName(), channelName, muteReleaseDate, "mutedReceiver"));
+
+                mutedBy.sendMessage(getMessage(mutedPlayer.getDisplayName(), mutedBy.getName(), channelName, muteReleaseDate, "mutedSender"));
+
             } else if (args.length == 2 && args[1] != null) {
                 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
                 LocalDateTime muteReleaseDate = LocalDateTime.parse(ParseDate.transformInputToDateInstant(args[1]), dateTimeFormatter);
@@ -43,12 +51,28 @@ public class MutePlayer implements CommandExecutor {
                 plugin.getChatUtilities().getChannelManager().getChannels()
                         .forEach(channel -> {
                             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getMutedPlayerManager().addMutedPlayer(mutedBy.getUniqueId(), mutedPlayer.getUniqueId(), mutedBy.getName(), mutedPlayer.getName(), channel.getName(), LocalDateTime.now(), muteReleaseDate));
-                            mutedPlayer.sendMessage("You have been muted in " + channel.getName() +" for " + args[1]);
-                            mutedBy.sendMessage(mutedPlayer.getDisplayName() + " has been muted in: " + channel.getName() + " for " + args[1]);
+                            mutedPlayer.sendMessage(getMessage(mutedPlayer.getDisplayName(), mutedBy.getName(), channel.getName(), muteReleaseDate, "mutedReceiver"));
+
+                            mutedBy.sendMessage(getMessage(mutedPlayer.getDisplayName(), mutedBy.getName(), channel.getName(), muteReleaseDate, "mutedSender"));
                         });
             }
         }
-
         return true;
+    }
+
+    private String getMessage(String mutedPlayerName, String mutedByName, String channelName, LocalDateTime date, String path) {
+
+        Map<ReplaceType, String> values = new HashMap<>();
+
+        if (path.contains("sender")) {
+            values.put(ReplaceType.PLAYER_NAME, mutedPlayerName);
+        } else {
+            values.put(ReplaceType.PLAYER_NAME, mutedByName);
+        }
+
+        values.put(ReplaceType.DATE, date.toString());
+        values.put(ReplaceType.Channel, channelName);
+
+        return MessageManager.getTranslatedMessageWithReplace(plugin, path, values);
     }
 }

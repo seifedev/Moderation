@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tech.seife.moderation</groupId>
   <artifactId>Moderation</artifactId>
-  <version>1.0</version>
+  <version>Pre-beta</version>
   <description>A moderation plugin for minecraft</description>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
@@ -56,7 +56,7 @@
       <artifactId>ChatUtilities</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>/home/seife/.m2/repository/tech/seife/chatutilities/ChatUtilities/1.0/ChatUtilities-1.0.jar</systemPath>
+      <systemPath>C:/Users/seife/.m2/repository/tech/seife/chatutilities/ChatUtilities/1.0/ChatUtilities-1.0.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>

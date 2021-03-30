@@ -23,6 +23,7 @@ import tech.seife.moderation.datamanager.spiedtext.SpiedTextManager;
 import tech.seife.moderation.datamanager.tickets.TicketManager;
 import tech.seife.moderation.events.*;
 import tech.seife.moderation.packets.HidePlayer;
+import tech.seife.moderation.utils.MessageManager;
 
 public class Moderation extends JavaPlugin {
 
@@ -32,7 +33,6 @@ public class Moderation extends JavaPlugin {
     private CustomFiles customFiles;
     private ConnectionPoolManager connectionPoolManager;
     private CachedData cachedData;
-    private MessageManager messageManager;
     private TicketManager ticketManager;
     private KickManager kickManager;
     private ProtocolManager protocolManager;
@@ -69,7 +69,6 @@ public class Moderation extends JavaPlugin {
         ticketManager = new TicketManager(dataManager);
         bannedPlayerManager = new BannedPlayerManager(this);
         kickManager = new KickManager(dataManager);
-        messageManager = new MessageManager();
 
         spiedTextManager = new SpiedTextManager(dataManager);
 
@@ -88,14 +87,14 @@ public class Moderation extends JavaPlugin {
 
     private void registerCommands() {
         getCommand("ban").setExecutor(new BanPlayer(this));
-        getCommand("kick").setExecutor(new KickPlayer(messageManager, this.getConfig(), dataManager));
+        getCommand("kick").setExecutor(new KickPlayer(this, dataManager));
         getCommand("viewInventory").setExecutor(new ViewNormaInventory());
         getCommand("viewEnderChest").setExecutor(new ViewEnderChest());
-        getCommand("readBook").setExecutor(new ReadBook(cachedData));
+        getCommand("readBook").setExecutor(new ReadBook(this, cachedData));
         getCommand("removeBan").setExecutor(new RemoveBan(this, dataManager));
         getCommand("vanish").setExecutor(new Vanish(this));
-        getCommand("enableSpy").setExecutor(new EnableSpyCommand(cachedData));
-        getCommand("disableSpy").setExecutor(new DisableSpyCommand(cachedData));
+        getCommand("enableSpy").setExecutor(new EnableSpyCommand(this, cachedData));
+        getCommand("disableSpy").setExecutor(new DisableSpyCommand(this, cachedData));
         getCommand("help").setExecutor(new TicketInfo());
         getCommand("helpme").setExecutor(new TicketApply(dataManager, ticketManager));
         getCommand("helphistory").setExecutor(new ViewTickets(this));
@@ -108,7 +107,7 @@ public class Moderation extends JavaPlugin {
 
         if (chatUtilities != null) {
             getCommand("mute").setExecutor(new MutePlayer(this));
-            getCommand("unmute").setExecutor(new UnMutePlayer(dataManager, chatUtilities.getChannelManager()));
+            getCommand("unmute").setExecutor(new UnMutePlayer(this, dataManager, chatUtilities.getChannelManager()));
         }
     }
 
@@ -137,10 +136,6 @@ public class Moderation extends JavaPlugin {
 
     public DataManager getDataManager() {
         return dataManager;
-    }
-
-    public MessageManager getMessageManager() {
-        return messageManager;
     }
 
     public CachedData getCachedData() {

@@ -4,7 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3dc6bdbf-7f14-4e72-b345-f3f9bc83e2e9" name="Default Changelist" comment="" />
+    <list default="true" id="3dc6bdbf-7f14-4e72-b345-f3f9bc83e2e9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/enums/ReplaceType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/translation.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/MessageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/utils/MessageManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/Moderation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/Moderation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/KickPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/KickPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/SetRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/SetRules.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/Vanish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/Vanish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/bans/BanPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/bans/BanPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/bans/RemoveBan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/bans/RemoveBan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/mutes/MutePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/mutes/MutePlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/mutes/UnMutePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/mutes/UnMutePlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/DisableSpyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/DisableSpyCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/EnableSpyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/EnableSpyCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/ReadBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/ReadBook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/CachedData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/CachedData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/CustomFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/CustomFiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataHandler.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,6 +41,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1eEO8YJEtg5hR0sWh2aK6XmPSLp" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -29,6 +54,7 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -45,7 +71,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -54,6 +80,19 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -176,6 +215,10 @@
       <workItem from="1605118962867" duration="587000" />
       <workItem from="1616161945255" duration="12000" />
       <workItem from="1616162150659" duration="373000" />
+      <workItem from="1616318148590" duration="115000" />
+      <workItem from="1616346305737" duration="47000" />
+      <workItem from="1617048517476" duration="1581000" />
+      <workItem from="1617084636140" duration="4798000" />
     </task>
     <servers />
   </component>

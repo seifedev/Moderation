@@ -1,11 +1,13 @@
 package tech.seife.moderation.commands;
 
+import com.comphenix.protocol.PacketType;
 import tech.seife.moderation.Moderation;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import tech.seife.moderation.utils.MessageManager;
 
 public class SetRules implements CommandExecutor {
 
@@ -22,6 +24,7 @@ public class SetRules implements CommandExecutor {
 
             if (player.getInventory().getItemInMainHand().getType().equals(Material.WRITTEN_BOOK)) {
                 plugin.getConfig().set("RuleBook", player.getInventory().getItemInMainHand());
+                sender.sendMessage(MessageManager.getTranslatedMessage(plugin, "newRules"));
                 plugin.saveConfig();
             }
         }

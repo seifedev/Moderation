@@ -1,17 +1,19 @@
 package tech.seife.moderation.commands.bans;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.seife.moderation.Moderation;
+import tech.seife.moderation.enums.ReplaceType;
+import tech.seife.moderation.utils.MessageManager;
 import tech.seife.moderation.utils.ParseDate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class BanPlayer implements CommandExecutor {
@@ -32,16 +34,32 @@ public class BanPlayer implements CommandExecutor {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
         LocalDateTime banReleaseDate = LocalDateTime.parse(ParseDate.transformInputToDateInstant(args[1]), dateTimeFormatter);
 
-        String banReason = plugin.getMessageManager().createBanMessage(args);
+        String bannedReason = getBanReason(args);
 
-        player.kickPlayer("You have been banned for: " + banReason +
-                "\nThe ban expires at: " + banReleaseDate);
+        kickPlayer(player, sender.getName(), bannedReason, banReleaseDate);
 
-        String message = plugin.getMessageManager().replaceDate(plugin.getMessageManager().replacePlayerName(Objects.requireNonNull("test"), player.getName()), banReleaseDate);
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
-
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getBannedPlayerManager().addBannedPlayer(generateBanId(), ((Player) sender).getUniqueId(), player.getUniqueId(), ((Player) sender).getName(), player.getName(), banReason, LocalDateTime.now(), banReleaseDate));
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getBannedPlayerManager().addBannedPlayer(generateBanId(), ((Player) sender).getUniqueId(), player.getUniqueId(), sender.getName(), player.getName(), bannedReason, LocalDateTime.now(), banReleaseDate));
         return true;
+    }
+
+    private void kickPlayer(Player bannedPlayer, String bannedBy, String reason, LocalDateTime localDateTime) {
+        Map<ReplaceType, String> values = new HashMap<>();
+
+        values.put(ReplaceType.PLAYER_NAME, bannedBy);
+        values.put(ReplaceType.REASON, reason);
+        values.put(ReplaceType.DATE, localDateTime.toString());
+
+        bannedPlayer.kickPlayer(MessageManager.getTranslatedMessageWithReplace(plugin, "banPlayer", values));
+
+    }
+
+    private String getBanReason(String[] args) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 1; i < args.length; i++) {
+            sb.append(args[i]);
+        }
+        return sb.toString();
     }
 
     private int generateBanId() {
