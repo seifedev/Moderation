@@ -96,11 +96,11 @@ public class Moderation extends JavaPlugin {
         getCommand("enableSpy").setExecutor(new EnableSpyCommand(this, cachedData));
         getCommand("disableSpy").setExecutor(new DisableSpyCommand(this, cachedData));
         getCommand("help").setExecutor(new TicketInfo());
-        getCommand("helpme").setExecutor(new TicketApply(dataManager, ticketManager));
+        getCommand("helpme").setExecutor(new TicketApply(this, dataManager, ticketManager));
         getCommand("helphistory").setExecutor(new ViewTickets(this));
         getCommand("viewBansHistory").setExecutor(new ViewPlayerBanHistory(this));
         getCommand("InspectPlayer").setExecutor(new InspectPlayer(this));
-        getCommand("cancelInspection").setExecutor(new CancelInspectionMode());
+        getCommand("cancelInspection").setExecutor(new CancelInspectionMode(this));
         getCommand("setRules").setExecutor(new SetRules(this));
         getCommand("rules").setExecutor(new Rules(this));
         getCommand("who").setExecutor(new Who(this));

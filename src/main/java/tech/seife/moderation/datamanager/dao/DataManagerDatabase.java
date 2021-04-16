@@ -298,7 +298,7 @@ public class DataManagerDatabase implements DataManager {
     public int getKickedTimesForPlayer(String playerName) {
         String sqlQuery = "SELECT COUNT(*) AS total FROM kicks where player_username = ?";
 
-       return countPunishmentTimes(playerName, sqlQuery);
+        return countPunishmentTimes(playerName, sqlQuery);
     }
 
     @Override
@@ -518,9 +518,11 @@ public class DataManagerDatabase implements DataManager {
 
     @Override
     public void removeMute(String playerName, String channelName) {
+        System.out.println(0);
         String sqlQuery = "SELECT * FROM current_mutes LEFT JOIN mutes m on current_mutes.mute_id = m.id WHERE player_username = ? and channel_name = ?";
         try (Connection connection = plugin.getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
+            System.out.println(1);
 
             ps.setString(1, playerName);
             ps.setString(2, channelName);
@@ -528,6 +530,7 @@ public class DataManagerDatabase implements DataManager {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                System.out.println(2);
                 moveCurrentMuteToMuteHistory(rs.getInt("m.id"));
                 deleteCurrentMute(rs.getInt("m.id"));
             }
@@ -553,11 +556,13 @@ public class DataManagerDatabase implements DataManager {
     }
 
     private void deleteCurrentMute(int id) {
+        System.out.println(3);
         String sqlQuery = "DELETE FROM current_mutes WHERE id = ?";
 
         try (Connection connection = plugin.getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
 
+            System.out.println(4);
             ps.setInt(1, id);
 
             ps.executeUpdate();
@@ -662,9 +667,9 @@ public class DataManagerDatabase implements DataManager {
         } catch (SQLException e) {
             plugin.getLogger().log(Level.WARNING, "Couldn't count the total banned times!\nError message: " + e.getMessage());
         }
-        System.out.println(5);
         return 0;
     }
+
 
     @Override
     public int getLastMuteId() {

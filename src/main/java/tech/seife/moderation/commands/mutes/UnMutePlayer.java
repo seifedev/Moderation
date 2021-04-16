@@ -36,7 +36,7 @@ public class UnMutePlayer implements CommandExecutor {
 
         if (dataManager.isPlayerMutedByUsername(player.getDisplayName(), channelName)) {
 
-            dataManager.removeMute(player.getName(), channelName);
+            dataManager.removeMute(player.getDisplayName(), channelName);
 
             sender.sendMessage(getMessage(sender, player, channelName, "unMuteSender"));
             sender.sendMessage(getMessage(sender, player, channelName, "unMuteReceiver"));

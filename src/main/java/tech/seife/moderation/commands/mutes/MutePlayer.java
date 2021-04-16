@@ -55,6 +55,8 @@ public class MutePlayer implements CommandExecutor {
 
                             mutedBy.sendMessage(getMessage(mutedPlayer.getDisplayName(), mutedBy.getName(), channel.getName(), muteReleaseDate, "mutedSender"));
                         });
+            } else {
+                sender.sendMessage(MessageManager.getTranslatedMessage(plugin, "argumentsError"));
             }
         }
         return true;

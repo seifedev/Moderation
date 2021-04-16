@@ -2,6 +2,7 @@ package tech.seife.moderation.commands;
 
 import tech.seife.moderation.Moderation;
 import tech.seife.moderation.ModerationScoreboard;
+import tech.seife.moderation.utils.MessageManager;
 import tech.seife.moderation.utils.MojangApiQuery;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -23,6 +24,7 @@ public class InspectPlayer implements CommandExecutor {
             ModerationScoreboard scoreboard = new ModerationScoreboard(plugin);
 
             scoreboard.setScoreboard(((Player) sender), Bukkit.getPlayer(MojangApiQuery.getPlayersUuidFromName(args[0])));
+            sender.sendMessage(MessageManager.getTranslatedMessage(plugin, "inspectPlayer"));
         }
         return true;
     }

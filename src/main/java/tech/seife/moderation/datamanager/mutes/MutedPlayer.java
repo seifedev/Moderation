@@ -42,10 +42,6 @@ public class MutedPlayer {
         return mutedByUsername;
     }
 
-    public String getMutedPlayerUsername() {
-        return mutedPlayerUsername;
-    }
-
     public String getChannelName() {
         return channelName;
     }

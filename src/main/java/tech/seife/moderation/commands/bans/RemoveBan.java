@@ -29,8 +29,6 @@ public class RemoveBan implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length != 1 || args[0] == null) return true;
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            dataManager.removeBan(dataManager.retrieveCurrentBannedPlayerInformation(args[0]));
-
             Map<ReplaceType, String> values = new HashMap<>();
 
             values.put(ReplaceType.PLAYER_NAME, args[0]);
@@ -39,8 +37,8 @@ public class RemoveBan implements CommandExecutor {
                 sender.sendMessage(MessageManager.getTranslatedMessageWithReplace(plugin, "unBan", values));
             } else {
                 sender.sendMessage(MessageManager.getTranslatedMessageWithReplace(plugin, "notBanned", values));
-
             }
+            dataManager.removeBan(dataManager.retrieveCurrentBannedPlayerInformation(args[0]));
         });
         return true;
     }
