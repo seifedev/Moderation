@@ -56,7 +56,7 @@
       <artifactId>ChatUtilities</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>C:/Users/seife/.m2/repository/tech/seife/chatutilities/ChatUtilities/1.0/ChatUtilities-1.0.jar</systemPath>
+      <systemPath>C:/Users/Seife/.m2/repository/tech/seife/chatutilities/ChatUtilities/Pre-beta/ChatUtilities-Pre-beta.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>

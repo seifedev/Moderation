@@ -34,7 +34,7 @@ public class UnMutePlayer implements CommandExecutor {
         Player player = Bukkit.getPlayer(args[0]);
         String channelName = channelManager.getChannel(args[1]).getName();
 
-        if (dataManager.isPlayerMutedByUsername(player.getDisplayName(), channelName)) {
+        if (this.dataManager.isPlayerMutedByUsername(player.getDisplayName(), channelName)) {
 
             dataManager.removeMute(player.getDisplayName(), channelName);
 

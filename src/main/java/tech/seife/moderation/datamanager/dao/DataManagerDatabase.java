@@ -8,7 +8,8 @@ import tech.seife.moderation.datamanager.spiedtext.SpiedText;
 import tech.seife.moderation.datamanager.tickets.Ticket;
 
 import java.sql.*;
-import java.time.ZoneOffset;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -47,13 +48,16 @@ public class DataManagerDatabase implements DataManager {
         try (Connection connection = plugin.getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
 
+            int bannedDateId = saveDateAndGetId(bannedPlayer.getBannedDate());
+            int releaseDateId = saveDateAndGetId(bannedPlayer.getReleaseDate());
+
             ps.setString(1, bannedPlayer.getBannedByUuid().toString());
             ps.setString(2, bannedPlayer.getBannedByName());
             ps.setString(3, bannedPlayer.getBannedUuid().toString());
             ps.setString(4, bannedPlayer.getBannedPlayerName());
             ps.setString(5, bannedPlayer.getReason());
-            ps.setTimestamp(6, Timestamp.from(bannedPlayer.getBannedDate().toInstant(ZoneOffset.UTC)));
-            ps.setTimestamp(7, Timestamp.from(bannedPlayer.getReleaseDate().toInstant(ZoneOffset.UTC)));
+            ps.setInt(6, bannedDateId);
+            ps.setInt(7, releaseDateId);
 
             ps.executeUpdate();
 
@@ -207,10 +211,10 @@ public class DataManagerDatabase implements DataManager {
     }
 
     private BannedPlayer translateBanFromResultSet(ResultSet rs) throws SQLException {
-        return new BannedPlayer(rs.getInt("id"), UUID.fromString(rs.getString("banned_by_uuid")), UUID.fromString(rs.getString("player_uuid")),
-                rs.getString("player_username"), rs.getString("banned_by_username"),
-                rs.getString("banned_reason"), rs.getTimestamp("banned_date").toLocalDateTime(),
-                rs.getTimestamp("release_date").toLocalDateTime());
+        return new BannedPlayer(rs.getInt("id"), UUID.fromString(rs.getString("banned_by_uuid")), UUID.fromString(rs.getString("player_uuid")), rs
+                .getString("player_username"), rs.getString("banned_by_username"), rs
+                .getString("banned_reason"), getDateFromId(rs.getInt("banned_date")),
+                getDateFromId(rs.getInt("release_date")));
     }
 
 
@@ -262,12 +266,14 @@ public class DataManagerDatabase implements DataManager {
         try (Connection connection = plugin.getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
+            int kickedTime = saveDateAndGetId(kick.getDate());
+
             ps.setString(1, kick.getKickedByUuid().toString());
             ps.setString(2, kick.getKickedByUsername());
             ps.setString(3, kick.getKickedPlayerUuid().toString());
             ps.setString(4, kick.getKickedPlayerUsername());
             ps.setString(5, kick.getReason());
-            ps.setTimestamp(6, Timestamp.from(kick.getDate().toInstant(ZoneOffset.UTC)));
+            ps.setInt(6, kickedTime);
 
             ps.executeUpdate();
 
@@ -308,10 +314,12 @@ public class DataManagerDatabase implements DataManager {
         try (Connection connection = plugin.getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
+            int spiedTime = saveDateAndGetId(spiedText.getDate());
+
             ps.setString(1, spiedText.getSenderUuid().toString());
             ps.setString(2, spiedText.getPlayerUsername());
             ps.setString(3, spiedText.getText());
-            ps.setTimestamp(4, Timestamp.from(spiedText.getDate().toInstant(ZoneOffset.UTC)));
+            ps.setInt(4, spiedTime);
 
             ps.executeUpdate();
 
@@ -333,7 +341,7 @@ public class DataManagerDatabase implements DataManager {
 
             Set<SpiedText> spiedTexts = new HashSet<>();
             while (rs.next()) {
-                spiedTexts.add(new SpiedText(UUID.fromString(rs.getString("player_uuid")), rs.getString("player_username"), rs.getString("text"), rs.getTimestamp("date").toLocalDateTime()));
+                spiedTexts.add(new SpiedText(UUID.fromString(rs.getString("player_uuid")), rs.getString("player_username"), rs.getString("text"), getDateFromId(rs.getInt("date"))));
             }
 
             return spiedTexts;
@@ -351,11 +359,13 @@ public class DataManagerDatabase implements DataManager {
         try (Connection connection = plugin.getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
+            int tickedTime = saveDateAndGetId(ticket.getCreationDate());
+
             ps.setString(1, ticket.getReporterUuid().toString());
             ps.setString(2, ticket.getReporterUsername());
             ps.setString(3, ticket.getSmallDescription());
             ps.setString(4, ticket.getDescription());
-            ps.setTimestamp(5, Timestamp.from(ticket.getCreationDate().toInstant(ZoneOffset.UTC)));
+            ps.setInt(5, tickedTime);
 
             ps.executeUpdate();
 
@@ -425,7 +435,7 @@ public class DataManagerDatabase implements DataManager {
                 ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
-                    return new Ticket(rs.getInt("id"), UUID.fromString(rs.getString("reporter_uuid")), rs.getString("reporter_username"), rs.getString("small_description"), rs.getString("description"), rs.getTimestamp("creation_date").toLocalDateTime());
+                    return new Ticket(rs.getInt("id"), UUID.fromString(rs.getString("reporter_uuid")), rs.getString("reporter_username"), rs.getString("small_description"), rs.getString("description"), getDateFromId(rs.getInt("creation_date")));
                 }
 
             } catch (SQLException e) {
@@ -481,13 +491,16 @@ public class DataManagerDatabase implements DataManager {
         try (Connection connection = plugin.getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
 
+            int mutedDate = saveDateAndGetId(mutedPlayer.getMutedDate());
+            int releaseDate = saveDateAndGetId(mutedPlayer.getReleaseDate());
+
             ps.setString(1, mutedPlayer.getMutedByUuid().toString());
             ps.setString(2, mutedPlayer.getMutedByUsername());
             ps.setString(3, mutedPlayer.getMutedPlayerUuid().toString());
             ps.setString(4, mutedPlayer.getMutedByUsername());
             ps.setString(5, mutedPlayer.getChannelName());
-            ps.setTimestamp(6, Timestamp.from(mutedPlayer.getMutedDate().toInstant(ZoneOffset.UTC)));
-            ps.setTimestamp(7, Timestamp.from(mutedPlayer.getReleaseDate().toInstant(ZoneOffset.UTC)));
+            ps.setInt(6, mutedDate);
+            ps.setInt(7, releaseDate);
 
             ps.executeUpdate();
 
@@ -636,9 +649,9 @@ public class DataManagerDatabase implements DataManager {
     }
 
     private MutedPlayer convertRsToMutedPlayer(ResultSet rs) throws SQLException {
-        return new MutedPlayer(rs.getInt("id"), UUID.fromString(rs.getString("muted_by_uuid")), UUID.fromString(rs.getString("player_uuid")),
-                rs.getString("muted_by_username"), rs.getString("player_username"), rs.getString("channel_name"),
-                rs.getTimestamp("muted_date").toLocalDateTime(), rs.getTimestamp("release_date").toLocalDateTime());
+        return new MutedPlayer(rs.getInt("id"), UUID.fromString(rs.getString("muted_by_uuid")), UUID.fromString(rs.getString("player_uuid")), rs
+                .getString("muted_by_username"), rs.getString("player_username"), rs.getString("channel_name"),
+                getDateFromId(rs.getInt("muted_date")), getDateFromId(rs.getInt("release_date")));
     }
 
 
@@ -687,5 +700,48 @@ public class DataManagerDatabase implements DataManager {
         }
 
         return -1;
+    }
+
+    private int saveDateAndGetId(LocalDateTime localDateTime) {
+        String sqlQuery = "INSERT INTO timeDate (DATE) VALUE (?);";
+
+        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+             PreparedStatement ps = connection.prepareStatement(sqlQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            ps.setTimestamp(1, Timestamp.valueOf(localDateTime));
+
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+
+            return rs.next() ? rs.getInt(1) : -1;
+
+        } catch (SQLException e) {
+            this.plugin.getLogger().log(Level.WARNING, "Failed to save date time!\nError message: " + e.getMessage());
+        }
+
+        return -1;
+    }
+
+    private LocalDateTime getDateFromId(int id) {
+        String sqlQuery = "SELECT * FROM timeDate WHERE ID = ?";
+
+        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+             PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
+
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs != null) {
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+
+                return rs.getTimestamp("DATE").toLocalDateTime();
+            }
+
+        } catch (SQLException e) {
+            this.plugin.getLogger().log(Level.WARNING, "Failed to get date time!\nError message: " + e.getMessage());
+        }
+        return LocalDateTime.now();
     }
 }
