@@ -32,7 +32,9 @@ public class HidePlayer {
 
 
     public void hidePlayer() {
-        protocolManager.addPacketListener(constructProtocol());
+        if (protocolManager != null) {
+            protocolManager.addPacketListener(constructProtocol());
+        }
     }
 
     private PacketAdapter constructProtocol() {

@@ -75,7 +75,7 @@ public class CustomFiles {
         kicksFile = new File(plugin.getDataFolder(), "kicks.json");
         createFile(kicksFile);
 
-        spiedText = new File(plugin.getDataFolder(), "spyCommands.json");
+        spiedText = new File(plugin.getDataFolder(), "spiedText.json");
         createFile(spiedText);
 
         ticketsFile = new File(plugin.getDataFolder(), "tickets.json");
