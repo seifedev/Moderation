@@ -3,7 +3,7 @@ name: ${project.name}
 api-version: 1.16
 version: ${project.version}
 description: ${project.description}
-depend:
+softdepend:
   - ProtocolLib
   - ChatUtilities
 

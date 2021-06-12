@@ -58,13 +58,8 @@ public class Moderation extends JavaPlugin {
 
         protocolManager = ProtocolLibrary.getProtocolManager();
 
-        customFiles = new CustomFiles(this);
         cachedData = new CachedData();
-        connectionPoolManager = new ConnectionPoolManager(getConfig());
 
-        new SQLManager(this, connectionPoolManager);
-
-        dataManager = new DataHandler(this).getDataManager();
 
         ticketManager = new TicketManager(dataManager);
         bannedPlayerManager = new BannedPlayerManager(this);
