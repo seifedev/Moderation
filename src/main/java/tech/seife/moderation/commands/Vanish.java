@@ -25,12 +25,12 @@ public class Vanish implements CommandExecutor {
 
         if (!plugin.getCachedData().getOnVanishModePlayers().contains(((Player) sender).getUniqueId())) {
 
-            plugin.getCachedData().getOnVanishModePlayers().add(player.getUniqueId());
+            plugin.getCachedData().addVanishModePlayers(player.getUniqueId());
 
             RemoveFromTab removeFromTab = new RemoveFromTab(plugin, plugin.getProtocolManager(), plugin.getCachedData());
             removeFromTab.sendPackets(player, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER);
         } else {
-            plugin.getCachedData().getOnVanishModePlayers().remove(player.getUniqueId());
+            plugin.getCachedData().removeVanishModePlayers(player.getUniqueId());
             RemoveFromTab removeFromTab = new RemoveFromTab(plugin, plugin.getProtocolManager(), plugin.getCachedData());
             removeFromTab.sendPackets(player, EnumWrappers.PlayerInfoAction.ADD_PLAYER);
         }

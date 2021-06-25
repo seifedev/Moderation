@@ -29,7 +29,7 @@ public class ReadBook implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             player.getInventory().addItem(cachedData.getBooks().get(UUID.fromString(args[0])));
-            cachedData.getBooks().remove(UUID.fromString(args[0]));
+            cachedData.removeBooks(UUID.fromString(args[0]));
 
             player.sendMessage(MessageManager.getTranslatedMessage(plugin, "receivedBook"));
         }

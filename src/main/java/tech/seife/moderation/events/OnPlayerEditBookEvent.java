@@ -31,7 +31,7 @@ public class OnPlayerEditBookEvent implements Listener {
         book.setItemMeta(bookMeta);
 
         UUID randomUuid = UUID.randomUUID();
-        cachedData.getBooks().put(randomUuid, book);
+        cachedData.addBook(randomUuid, book);
 
         cachedData.getAvailableStaff()
                 .forEach(uuid -> {

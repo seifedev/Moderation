@@ -21,7 +21,7 @@ public class EnableSpyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            cachedData.getSpyMembers().add(((Player) sender).getUniqueId());
+            cachedData.addSpyMember(((Player) sender).getUniqueId());
             sender.sendMessage(MessageManager.getTranslatedMessage(plugin, "enableSpy"));
         }
         return true;

@@ -21,7 +21,7 @@ public class DisableSpyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (sender instanceof Player) {
-            cachedData.getSpyMembers().removeIf(uuid -> ((Player) sender).getUniqueId().equals(uuid));
+            cachedData.removeSpyMember(((Player) sender).getUniqueId());
             sender.sendMessage(MessageManager.getTranslatedMessage(plugin, "disabledSpy"));
         }
         return true;

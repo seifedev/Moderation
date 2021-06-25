@@ -35,7 +35,7 @@ public class OnPlayerJoinEvent implements Listener {
                 plugin.getDataManager().removeBan(plugin.getDataManager().retrieveCurrentBannedPlayerInformation(e.getPlayer().getName()));
             }
         } else if (e.getPlayer().hasPermission("Moderation.viewItems")) {
-            plugin.getCachedData().getAvailableStaff().add(e.getPlayer().getUniqueId());
+            plugin.getCachedData().addAvailableStaff(e.getPlayer().getUniqueId());
         }
     }
 

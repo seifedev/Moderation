@@ -4,6 +4,7 @@ import tech.seife.moderation.datamanager.banned.BannedPlayer;
 import org.bukkit.inventory.ItemStack;
 import tech.seife.moderation.utils.MessageManager;
 
+import java.security.PublicKey;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -26,28 +27,63 @@ public class CachedData {
         bansInventorySlotBans = new ConcurrentHashMap<>();
     }
 
+    //    I know this method goes against encapsulation, but I can't think of something better. to be fixed.
     public ConcurrentMap<UUID, ConcurrentMap<Integer, BannedPlayer>> getBansInventorySlotBans() {
         return bansInventorySlotBans;
     }
 
+    //    I know this method goes against encapsulation, but I can't think of something better. to be fixed.
     public ConcurrentMap<UUID, ConcurrentMap<Integer, Integer>> getTicketInventorySlotId() {
         return ticketInventorySlotId;
     }
 
     public Set<UUID> getSpyMembers() {
-        return spyMembers;
+        return Set.copyOf(spyMembers);
+    }
+
+    public void addSpyMember(UUID playerUuid) {
+        spyMembers.add(playerUuid);
+    }
+
+    public void removeSpyMember(UUID playerUuid) {
+        spyMembers.remove(playerUuid);
     }
 
     public Set<UUID> getOnVanishModePlayers() {
-        return onVanishModePlayers;
+        return Set.copyOf(onVanishModePlayers);
     }
+
+    public void addVanishModePlayers(UUID playerUuid) {
+        onVanishModePlayers.add(playerUuid);
+    }
+
+    public void removeVanishModePlayers(UUID playerUuid) {
+        spyMembers.remove(playerUuid);
+    }
+
 
     public Set<UUID> getAvailableStaff() {
-        return availableStaff;
+        return Set.copyOf(availableStaff);
     }
 
-    public HashMap<UUID, ItemStack> getBooks() {
-        return books;
+    public void addAvailableStaff(UUID playerUuid) {
+        availableStaff.add(playerUuid);
     }
 
+    public void removeAvailableStaff(UUID playerUuid) {
+        availableStaff.remove(playerUuid);
+    }
+
+
+    public Map<UUID, ItemStack> getBooks() {
+        return Map.copyOf(books);
+    }
+
+    public void addBook(UUID playerUuid, ItemStack itemStack) {
+        books.put(playerUuid, itemStack);
+    }
+
+    public void removeBooks(UUID playerUuid) {
+        books.remove(playerUuid);
+    }
 }

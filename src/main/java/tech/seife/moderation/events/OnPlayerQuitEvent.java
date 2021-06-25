@@ -15,6 +15,6 @@ public class OnPlayerQuitEvent implements Listener {
 
     @EventHandler
     public void onPlayerQuitEvent(PlayerQuitEvent e) {
-        cachedData.getAvailableStaff().remove(e.getPlayer().getUniqueId());
+        cachedData.removeAvailableStaff(e.getPlayer().getUniqueId());
     }
 }
