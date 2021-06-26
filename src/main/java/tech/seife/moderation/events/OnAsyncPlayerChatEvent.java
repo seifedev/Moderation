@@ -27,9 +27,9 @@ public class OnAsyncPlayerChatEvent implements Listener {
             plugin.getSpiedTextManager().saveSpiedText(e.getPlayer().getUniqueId(), e.getPlayer().getName(), e.getMessage());
             channelManager.getChannels()
                     .forEach(channel -> {
-                        if (channel.getPlayersInChannel().contains(e.getPlayer().getUniqueId()) && plugin.getDataManager().isPlayerMutedByUuid(e.getPlayer().getUniqueId(), channel.getName())) {
+                        if (channel.getPlayersInChannel().contains(e.getPlayer().getUniqueId()) && plugin.getDataHandler().getDataManager().isPlayerMutedByUuid(e.getPlayer().getUniqueId(), channel.getName())) {
                             if (canUnmute(e.getPlayer().getName(), channel.getName())) {
-                                plugin.getDataManager().removeMute(e.getPlayer().getName(), channel.getName());
+                                plugin.getDataHandler().getDataManager().removeMute(e.getPlayer().getName(), channel.getName());
                             } else {
                                 e.getPlayer().sendMessage("You're muted in this channel");
                                 e.setCancelled(true);
@@ -40,8 +40,8 @@ public class OnAsyncPlayerChatEvent implements Listener {
     }
 
     private boolean canUnmute(String playerUsername, String channelName) {
-        if (plugin.getDataManager() != null && plugin.getDataManager().loadMutedPlayer(playerUsername, channelName) != null && plugin.getDataManager().loadMutedPlayer(playerUsername, channelName).getReleaseDate() != null) {
-            return LocalDateTime.now().isAfter(plugin.getDataManager().loadMutedPlayer(playerUsername, channelName).getReleaseDate());
+        if (plugin.getDataHandler().getDataManager() != null && plugin.getDataHandler().getDataManager().loadMutedPlayer(playerUsername, channelName) != null && plugin.getDataHandler().getDataManager().loadMutedPlayer(playerUsername, channelName).getReleaseDate() != null) {
+            return LocalDateTime.now().isAfter(plugin.getDataHandler().getDataManager().loadMutedPlayer(playerUsername, channelName).getReleaseDate());
         } else {
             return true;
         }

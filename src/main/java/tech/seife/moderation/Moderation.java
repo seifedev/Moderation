@@ -16,25 +16,22 @@ import tech.seife.moderation.commands.support.TicketApply;
 import tech.seife.moderation.commands.support.TicketInfo;
 import tech.seife.moderation.commands.support.ViewTickets;
 import tech.seife.moderation.datamanager.banned.BannedPlayerManager;
-import tech.seife.moderation.datamanager.dao.*;
+import tech.seife.moderation.datamanager.dao.CachedData;
+import tech.seife.moderation.datamanager.dao.DataHandler;
 import tech.seife.moderation.datamanager.kicks.KickManager;
 import tech.seife.moderation.datamanager.mutes.MutedPlayerManager;
 import tech.seife.moderation.datamanager.spiedtext.SpiedTextManager;
 import tech.seife.moderation.datamanager.tickets.TicketManager;
 import tech.seife.moderation.events.*;
 import tech.seife.moderation.packets.HidePlayer;
-import tech.seife.moderation.utils.MessageManager;
 
 public class Moderation extends JavaPlugin {
 
     private BannedPlayerManager bannedPlayerManager;
 
-    private DataManager dataManager;
-    private CustomFiles customFiles;
-    private ConnectionPoolManager connectionPoolManager;
+    private DataHandler dataHandler;
     private CachedData cachedData;
     private TicketManager ticketManager;
-    private KickManager kickManager;
     private ProtocolManager protocolManager;
     private ChatUtilities chatUtilities;
     private MutedPlayerManager mutedPlayerManager;
@@ -56,16 +53,17 @@ public class Moderation extends JavaPlugin {
     private void initialize() {
         saveDefaultConfig();
 
+        dataHandler = new DataHandler(this);
+
         protocolManager = ProtocolLibrary.getProtocolManager();
 
         cachedData = new CachedData();
 
 
-        ticketManager = new TicketManager(dataManager);
+        ticketManager = new TicketManager(dataHandler.getDataManager());
         bannedPlayerManager = new BannedPlayerManager(this);
-        kickManager = new KickManager(dataManager);
 
-        spiedTextManager = new SpiedTextManager(dataManager);
+        spiedTextManager = new SpiedTextManager(dataHandler.getDataManager());
 
         registerChatUtilities();
 
@@ -82,16 +80,16 @@ public class Moderation extends JavaPlugin {
 
     private void registerCommands() {
         getCommand("ban").setExecutor(new BanPlayer(this));
-        getCommand("kick").setExecutor(new KickPlayer(this, dataManager));
+        getCommand("kick").setExecutor(new KickPlayer(this, dataHandler.getDataManager()));
         getCommand("viewInventory").setExecutor(new ViewNormaInventory());
         getCommand("viewEnderChest").setExecutor(new ViewEnderChest());
         getCommand("readBook").setExecutor(new ReadBook(this, cachedData));
-        getCommand("removeBan").setExecutor(new RemoveBan(this, dataManager));
+        getCommand("removeBan").setExecutor(new RemoveBan(this, dataHandler.getDataManager()));
         getCommand("vanish").setExecutor(new Vanish(this));
         getCommand("enableSpy").setExecutor(new EnableSpyCommand(this, cachedData));
         getCommand("disableSpy").setExecutor(new DisableSpyCommand(this, cachedData));
         getCommand("help").setExecutor(new TicketInfo());
-        getCommand("helpme").setExecutor(new TicketApply(this, dataManager, ticketManager));
+        getCommand("helpme").setExecutor(new TicketApply(this, dataHandler.getDataManager(), ticketManager));
         getCommand("helphistory").setExecutor(new ViewTickets(this));
         getCommand("viewBansHistory").setExecutor(new ViewPlayerBanHistory(this));
         getCommand("InspectPlayer").setExecutor(new InspectPlayer(this));
@@ -102,7 +100,7 @@ public class Moderation extends JavaPlugin {
 
         if (chatUtilities != null) {
             getCommand("mute").setExecutor(new MutePlayer(this));
-            getCommand("unmute").setExecutor(new UnMutePlayer(this, dataManager, chatUtilities.getChannelManager()));
+            getCommand("unmute").setExecutor(new UnMutePlayer(this, dataHandler.getDataManager(), chatUtilities.getChannelManager()));
         }
     }
 
@@ -113,6 +111,7 @@ public class Moderation extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new OnPlayerEditBookEvent(cachedData), this);
         Bukkit.getPluginManager().registerEvents(new OnPlayerCommandPreprocessEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new OnInventoryClickEvent(this), this);
+
         Bukkit.getPluginManager().registerEvents(new OnAsyncPlayerChatEvent(this, chatUtilities.getChannelManager()), this);
     }
 
@@ -125,28 +124,12 @@ public class Moderation extends JavaPlugin {
         return bannedPlayerManager;
     }
 
-    public ConnectionPoolManager getConnectionPoolManager() {
-        return connectionPoolManager;
-    }
-
-    public DataManager getDataManager() {
-        return dataManager;
-    }
-
     public CachedData getCachedData() {
         return cachedData;
     }
 
-    public CustomFiles getCustomFiles() {
-        return customFiles;
-    }
-
     public TicketManager getTicketManager() {
         return ticketManager;
-    }
-
-    public KickManager getKickManager() {
-        return kickManager;
     }
 
     public ProtocolManager getProtocolManager() {
@@ -163,5 +146,9 @@ public class Moderation extends JavaPlugin {
 
     public SpiedTextManager getSpiedTextManager() {
         return spiedTextManager;
+    }
+
+    public DataHandler getDataHandler() {
+        return dataHandler;
     }
 }

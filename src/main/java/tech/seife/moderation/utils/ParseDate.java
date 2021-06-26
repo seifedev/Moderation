@@ -1,11 +1,14 @@
 package tech.seife.moderation.utils;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+//Credits to: khobbits
 public class ParseDate {
 
     private static Pattern PATTERN = Pattern.compile("(?:([0-9]+)\\s*y[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*mo[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*w[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*d[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*h[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*m[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*(?:s[a-z]*)?)?", Pattern.CASE_INSENSITIVE);
@@ -62,25 +65,25 @@ public class ParseDate {
         Calendar c = new GregorianCalendar();
 
         if (years > 0) {
-            c.add(Calendar.YEAR, years * 1);
+            c.add(Calendar.YEAR, years);
         }
         if (months > 0) {
-            c.add(Calendar.MONTH, months * 1);
+            c.add(Calendar.MONTH, months);
         }
         if (weeks > 0) {
-            c.add(Calendar.WEEK_OF_YEAR, weeks * 1);
+            c.add(Calendar.WEEK_OF_YEAR, weeks);
         }
         if (days > 0) {
-            c.add(Calendar.DAY_OF_MONTH, days *1);
+            c.add(Calendar.DAY_OF_MONTH, days);
         }
         if (hours > 0) {
-            c.add(Calendar.HOUR_OF_DAY, hours * 1);
+            c.add(Calendar.HOUR_OF_DAY, hours);
         }
         if (minutes > 0) {
-            c.add(Calendar.MINUTE, minutes * 1);
+            c.add(Calendar.MINUTE, minutes);
         }
         if (seconds > 0) {
-            c.add(Calendar.SECOND, seconds * 1);
+            c.add(Calendar.SECOND, seconds);
         }
 
         return c.toInstant().toString();

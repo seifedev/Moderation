@@ -50,7 +50,7 @@ public class OnInventoryClickEvent implements Listener {
 
     private void giveTicketToPlayer(Player whoClicked, int ticketId) {
         if (plugin.getCachedData().getTicketInventorySlotId().get(whoClicked.getUniqueId()) != null) {
-            Ticket ticket = plugin.getDataManager().retrieveTicket(ticketId, whoClicked.getName());
+            Ticket ticket = plugin.getDataHandler().getDataManager().retrieveTicket(ticketId, whoClicked.getName());
 
             if (plugin.getTicketManager().transformTicketToBook(ticket) != null) {
                 whoClicked.getInventory().addItem(plugin.getTicketManager().transformTicketToBook(ticket));

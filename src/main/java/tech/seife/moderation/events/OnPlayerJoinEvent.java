@@ -25,14 +25,14 @@ public class OnPlayerJoinEvent implements Listener {
     }
 
     private void removeBanIfPossible(PlayerJoinEvent e) {
-        if (plugin.getDataManager().isPlayerBannedUuidCheck(e.getPlayer().getUniqueId())) {
+        if (plugin.getDataHandler().getDataManager().isPlayerBannedUuidCheck(e.getPlayer().getUniqueId())) {
             if (!canReleaseBan(e.getPlayer().getName())) {
-                BannedPlayer ban = plugin.getDataManager().retrieveCurrentBannedPlayerInformation(e.getPlayer().getName());
+                BannedPlayer ban = plugin.getDataHandler().getDataManager().retrieveCurrentBannedPlayerInformation(e.getPlayer().getName());
                 e.getPlayer().kickPlayer("You have been banned for: " + ban.getReason() +
                         "\nYou got banned at: " + ban.getBannedDate() +
                         "\nThe ban expires at: " + ban.getReleaseDate());
             } else {
-                plugin.getDataManager().removeBan(plugin.getDataManager().retrieveCurrentBannedPlayerInformation(e.getPlayer().getName()));
+                plugin.getDataHandler().getDataManager().removeBan(plugin.getDataHandler().getDataManager().retrieveCurrentBannedPlayerInformation(e.getPlayer().getName()));
             }
         } else if (e.getPlayer().hasPermission("Moderation.viewItems")) {
             plugin.getCachedData().addAvailableStaff(e.getPlayer().getUniqueId());
@@ -48,6 +48,6 @@ public class OnPlayerJoinEvent implements Listener {
     }
 
     private boolean canReleaseBan(String playerUsername) {
-        return LocalDateTime.now().isAfter(plugin.getDataManager().retrieveCurrentBannedPlayerInformation(playerUsername).getReleaseDate());
+        return LocalDateTime.now().isAfter(plugin.getDataHandler().getDataManager().retrieveCurrentBannedPlayerInformation(playerUsername).getReleaseDate());
     }
 }

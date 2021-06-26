@@ -1,5 +1,6 @@
 package tech.seife.moderation.commands.bans;
 
+import net.sf.cglib.core.Local;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,7 +19,6 @@ import java.util.regex.Pattern;
 
 public class BanPlayer implements CommandExecutor {
 
-    private static final Pattern PATTERN = Pattern.compile("(?:([0-9]+)\\s*y[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*mo[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*w[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*d[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*h[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*m[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*(?:s[a-z]*)?)?", Pattern.CASE_INSENSITIVE);
     private final Moderation plugin;
 
     public BanPlayer(Moderation plugin) {
@@ -32,7 +32,7 @@ public class BanPlayer implements CommandExecutor {
 
         Player player = Bukkit.getPlayer(args[0]);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
-        LocalDateTime banReleaseDate = LocalDateTime.parse(ParseDate.transformInputToDateInstant(args[1]), dateTimeFormatter);
+        LocalDateTime banReleaseDate = LocalDateTime.parse(ParseDate.transformInputToDateInstant(args[1]), dateTimeFormatter).plusHours(3);
 
         String bannedReason = getBanReason(args);
 
@@ -63,6 +63,6 @@ public class BanPlayer implements CommandExecutor {
     }
 
     private int generateBanId() {
-        return plugin.getDataManager().getLastBanId() + 1;
+        return plugin.getDataHandler().getDataManager().getLastBanId() + 1;
     }
 }

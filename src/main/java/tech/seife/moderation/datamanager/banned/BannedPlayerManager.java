@@ -28,7 +28,7 @@ public class BannedPlayerManager {
 
         BannedPlayer bannedPlayer = new BannedPlayer(id, bannedByUuid, bannedUuid, bannedByPlayerName, bannedByName, reason, bannedDate, releaseDate);
 
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getDataManager().saveBan(bannedPlayer));
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getDataHandler().getDataManager().saveBan(bannedPlayer));
     }
 
 
@@ -50,6 +50,6 @@ public class BannedPlayerManager {
 
 
     public Set<BannedPlayer> getPlayersBanHistory(String playerUsername) {
-        return plugin.getDataManager().loadPlayerBanHistory(playerUsername);
+        return plugin.getDataHandler().getDataManager().loadPlayerBanHistory(playerUsername);
     }
 }

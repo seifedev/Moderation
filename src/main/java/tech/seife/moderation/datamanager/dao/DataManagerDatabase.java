@@ -29,7 +29,7 @@ public class DataManagerDatabase implements DataManager {
         if (banId != -1) {
             String sqlQuery = "INSERT INTO current_bans(ban_id) VALUE (?);";
 
-            try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+            try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
                  PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
                 ps.setInt(1, banId);
@@ -45,7 +45,7 @@ public class DataManagerDatabase implements DataManager {
     private int insertIntoBansAndAcquireId(BannedPlayer bannedPlayer) {
         String sqlQuery = "INSERT INTO bans (banned_by_uuid, banned_by_username, player_uuid, player_username, banned_reason, banned_date, release_date) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             int bannedDateId = saveDateAndGetId(bannedPlayer.getBannedDate());
@@ -90,7 +90,7 @@ public class DataManagerDatabase implements DataManager {
 
         String sqlQuery = "SELECT * FROM bans WHERE id = ?;";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setInt(1, banId);
@@ -112,7 +112,7 @@ public class DataManagerDatabase implements DataManager {
     public int getLastBanId() {
         String sqlQuery = "SELECT * FROM bans ORDER BY id DESC LIMIT 1;";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ResultSet rs = ps.executeQuery();
@@ -132,7 +132,7 @@ public class DataManagerDatabase implements DataManager {
                 "         INNER JOIN current_bans cb WHERE cb.id = bans.id" +
                 "  and bans.player_username = ?;";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, playerUsername);
@@ -151,7 +151,7 @@ public class DataManagerDatabase implements DataManager {
     public boolean isPlayerBannedUuidCheck(UUID bannedPlayerUuid) {
         String sqlQuery = "SELECT * FROM current_bans cb INNER JOIN bans  WHERE cb.id = bans.id and bans.player_uuid = ?;";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setString(1, bannedPlayerUuid.toString());
@@ -170,7 +170,7 @@ public class DataManagerDatabase implements DataManager {
     public boolean isPlayerBannedUsernameCheck(String playerUsername) {
         String sqlQuery = "SELECT * FROM current_bans cb INNER JOIN bans  WHERE cb.id = bans.id and bans.player_username = ?;";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setString(1, playerUsername);
@@ -189,7 +189,7 @@ public class DataManagerDatabase implements DataManager {
     public Set<BannedPlayer> loadPlayerBanHistory(String playerUsername) {
         String sqlQuery = "SELECT * FROM bans where player_username = ?";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setString(1, playerUsername);
@@ -222,7 +222,7 @@ public class DataManagerDatabase implements DataManager {
     public void moveCurrentBanToBanHistory(int banId) {
         String sqlQuery = "INSERT INTO ban_history(ban_id) VALUE (?);";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setInt(1, banId);
@@ -240,7 +240,7 @@ public class DataManagerDatabase implements DataManager {
     private void deleteFromCurrentBans(int banId) {
         String sqlQuery = "DELETE FROM current_bans WHERE ban_id = ?";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setInt(1, banId);
@@ -263,7 +263,7 @@ public class DataManagerDatabase implements DataManager {
     public void saveKick(Kick kick) {
         String sqlQuery = "INSERT INTO kicks (kicked_by_uuid, kicked_by_username, player_uuid, player_username, reason, date) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             int kickedTime = saveDateAndGetId(kick.getDate());
@@ -286,7 +286,7 @@ public class DataManagerDatabase implements DataManager {
     public int getLastKickedId() {
         String sqlQuery = "SELECT * FROM kicks ORDER BY id DESC LIMIT 1;";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ResultSet rs = ps.executeQuery();
@@ -311,7 +311,7 @@ public class DataManagerDatabase implements DataManager {
     public void saveTextFromChat(SpiedText spiedText) {
         String sqlQuery = "INSERT INTO spied_text (player_uuid, player_username, text, date) VALUES (?, ?, ?, ?);";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             int spiedTime = saveDateAndGetId(spiedText.getDate());
@@ -332,7 +332,7 @@ public class DataManagerDatabase implements DataManager {
     public Set<SpiedText> retrieveSpiedText(String playerUsername) {
         String sqlQuery = "SELECT * FROM spiedText WHERE player_username = ?";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setString(1, playerUsername);
@@ -356,7 +356,7 @@ public class DataManagerDatabase implements DataManager {
     @Override
     public void saveTicket(Ticket ticket) {
         String sqlQuery = "INSERT INTO tickets (reporter_uuid, reporter_username, small_description, description, creation_date) VALUES (?, ?, ?, ?, ?);";
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             int tickedTime = saveDateAndGetId(ticket.getCreationDate());
@@ -379,7 +379,7 @@ public class DataManagerDatabase implements DataManager {
     public int getAmountOfTickets(String playerUsername) {
         String sqlQuery = "SELECT COUNT(*) AS total FROM tickets where reporter_username = ?;";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setString(1, playerUsername);
@@ -399,7 +399,7 @@ public class DataManagerDatabase implements DataManager {
     public Set<Integer> retrieveTicketsIdForPlayer(String playerUsername) {
         String sqlQuery = "SELECT * FROM tickets WHERE reporter_username = ?";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setString(1, playerUsername);
@@ -427,7 +427,7 @@ public class DataManagerDatabase implements DataManager {
         if (verifyTicketId(id, playerUsername)) {
             String sqlQuery = "SELECT * FROM tickets WHERE tickets.id = ?";
 
-            try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+            try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
                  PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
                 ps.setInt(1, id);
@@ -449,7 +449,7 @@ public class DataManagerDatabase implements DataManager {
     public int getLastTicketId() {
         String sqlQuery = "SELECT * FROM tickets ORDER BY id DESC LIMIT 1;";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ResultSet rs = ps.executeQuery();
@@ -468,7 +468,7 @@ public class DataManagerDatabase implements DataManager {
     public boolean verifyTicketId(int id, String playerUsername) {
         String sqlQuery = "SELECT * FROM tickets WHERE id = ? and reporter_username = ?";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setInt(1, id);
@@ -488,7 +488,7 @@ public class DataManagerDatabase implements DataManager {
     public void saveMute(MutedPlayer mutedPlayer) {
         String sqlQuery = "INSERT INTO mutes (muted_by_uuid, muted_by_username, player_uuid, player_username, channel_name, muted_date, release_date) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             int mutedDate = saveDateAndGetId(mutedPlayer.getMutedDate());
@@ -518,7 +518,7 @@ public class DataManagerDatabase implements DataManager {
     private void saveToCurrentMute(int id) {
         String sqlQuery = "INSERT INTO current_mutes (mute_id) VALUE (?)";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setInt(1, id);
@@ -533,7 +533,7 @@ public class DataManagerDatabase implements DataManager {
     public void removeMute(String playerName, String channelName) {
         System.out.println(0);
         String sqlQuery = "SELECT * FROM current_mutes LEFT JOIN mutes m on current_mutes.mute_id = m.id WHERE player_username = ? and channel_name = ?";
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
             System.out.println(1);
 
@@ -556,7 +556,7 @@ public class DataManagerDatabase implements DataManager {
     private void moveCurrentMuteToMuteHistory(int id) {
         String sqlQuery = "INSERT INTO mute_history (mute_id) VALUES (?)";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setInt(1, id);
@@ -572,7 +572,7 @@ public class DataManagerDatabase implements DataManager {
         System.out.println(3);
         String sqlQuery = "DELETE FROM current_mutes WHERE id = ?";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             System.out.println(4);
@@ -589,7 +589,7 @@ public class DataManagerDatabase implements DataManager {
     public boolean isPlayerMutedByUuid(UUID playerUuid, String channelName) {
         String sqlQuery = "SELECT * FROM current_mutes LEFT JOIN mutes m on m.id = current_mutes.mute_id WHERE player_uuid = ? and channel_name = ?";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setString(1, playerUuid.toString());
@@ -609,7 +609,7 @@ public class DataManagerDatabase implements DataManager {
     public boolean isPlayerMutedByUsername(String playerUsername, String channelName) {
         String sqlQuery = "SELECT * FROM current_mutes LEFT JOIN mutes m on m.id = current_mutes.mute_id WHERE player_username = ? and channel_name = ?";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setString(1, playerUsername);
@@ -630,7 +630,7 @@ public class DataManagerDatabase implements DataManager {
     public MutedPlayer loadMutedPlayer(String playerUsername, String channelName) {
         String sqlQuery = "SELECT * FROM current_mutes LEFT JOIN mutes m on m.id = current_mutes.mute_id WHERE player_username = ? and channel_name = ?";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setString(1, playerUsername);
@@ -664,7 +664,7 @@ public class DataManagerDatabase implements DataManager {
     }
 
     private int countPunishmentTimes(String playerUsername, String sqlQuery) {
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setString(1, playerUsername);
@@ -688,7 +688,7 @@ public class DataManagerDatabase implements DataManager {
     public int getLastMuteId() {
         String sqlQuery = "SELECT * FROM mutes ORDER BY id DESC LIMIT 1;";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ResultSet rs = ps.executeQuery();
@@ -705,7 +705,7 @@ public class DataManagerDatabase implements DataManager {
     private int saveDateAndGetId(LocalDateTime localDateTime) {
         String sqlQuery = "INSERT INTO timeDate (DATE) VALUE (?);";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             ps.setTimestamp(1, Timestamp.valueOf(localDateTime));
@@ -726,7 +726,7 @@ public class DataManagerDatabase implements DataManager {
     private LocalDateTime getDateFromId(int id) {
         String sqlQuery = "SELECT * FROM timeDate WHERE ID = ?";
 
-        try (Connection connection = plugin.getConnectionPoolManager().getConnection();
+        try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
             ps.setInt(1, id);

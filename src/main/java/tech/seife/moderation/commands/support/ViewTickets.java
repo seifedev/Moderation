@@ -41,7 +41,7 @@ public class ViewTickets implements CommandExecutor {
 
     private void openTicketInventory(Player playerToOpenInventory, Player playerToInspect) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            Set<Integer> ticketIds = plugin.getDataManager().retrieveTicketsIdForPlayer(playerToInspect.getName());
+            Set<Integer> ticketIds = plugin.getDataHandler().getDataManager().retrieveTicketsIdForPlayer(playerToInspect.getName());
             if (ticketIds != null) {
                 TicketHistoryInventory ticketHistoryGui = new TicketHistoryInventory(plugin, playerToOpenInventory, playerToInspect.getName());
 

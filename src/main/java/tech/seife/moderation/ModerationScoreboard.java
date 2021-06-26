@@ -32,16 +32,16 @@ public class ModerationScoreboard {
         Score moderatedPlayer = objective.getScore(ChatColor.DARK_PURPLE + "Player name: >> " + player.getName() + " <<");
         moderatedPlayer.setScore(15);
 
-        Score kickedTimes = objective.getScore(ChatColor.DARK_BLUE + "Times got kicked: >> " + plugin.getDataManager().getKickedTimesForPlayer(player.getName()) + " <<");
+        Score kickedTimes = objective.getScore(ChatColor.DARK_BLUE + "Times got kicked: >> " + plugin.getDataHandler().getDataManager().getKickedTimesForPlayer(player.getName()) + " <<");
         kickedTimes.setScore(14);
 
-        Score ticketsApplied = objective.getScore(ChatColor.GREEN + "Times applied a ticket: >> " + plugin.getDataManager().getAmountOfTickets(player.getName()) + " <<");
+        Score ticketsApplied = objective.getScore(ChatColor.GREEN + "Times applied a ticket: >> " + plugin.getDataHandler().getDataManager().getAmountOfTickets(player.getName()) + " <<");
         ticketsApplied.setScore(13);
 
-        Score bannedTimes = objective.getScore(ChatColor.RED + "Times banned: >> " + plugin.getDataManager().getTotalBannedTimesForPlayer(player.getName()) + " <<");
+        Score bannedTimes = objective.getScore(ChatColor.RED + "Times banned: >> " + plugin.getDataHandler().getDataManager().getTotalBannedTimesForPlayer(player.getName()) + " <<");
         bannedTimes.setScore(12);
 
-        Score mutedTimes = objective.getScore(ChatColor.YELLOW + "Times muted: >> " + plugin.getDataManager().getTotalMutedTimesForPlayer(player.getName()) + " <<");
+        Score mutedTimes = objective.getScore(ChatColor.YELLOW + "Times muted: >> " + plugin.getDataHandler().getDataManager().getTotalMutedTimesForPlayer(player.getName()) + " <<");
         mutedTimes.setScore(11);
     }
 }

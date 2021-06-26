@@ -1,3 +1,15 @@
 {
+  "id": {
+    "bannedPlayerUuid": "asdasd",
+    "bannedPlayerUsername": "asdasd",
+    "banDate": {
+      "details": {
+        "bannedByUuid": "asdasd",
+        "bannedByUsername": "asdasd",
+        "reason": "asdas",
+        "bannedReleaseDate": "asdasd"
 
+      }
+    }
+  }
 }

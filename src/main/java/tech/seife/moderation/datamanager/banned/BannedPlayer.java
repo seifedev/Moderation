@@ -53,4 +53,8 @@ public class BannedPlayer {
     public String getBannedByName() {
         return bannedByName;
     }
+
+    public int getId() {
+        return id;
+    }
 }

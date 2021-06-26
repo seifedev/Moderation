@@ -16,10 +16,10 @@ public class MutedPlayerManager {
 
     public void addMutedPlayer(UUID mutedByUuid, UUID mutedPlayerUuid, String mutedByUsername, String mutedPlayerUsername, String channelName, LocalDateTime mutedDate, LocalDateTime releaseDate){
         MutedPlayer mutedPlayer = new MutedPlayer(generateId(), mutedByUuid, mutedPlayerUuid, mutedByUsername, mutedPlayerUsername, channelName, mutedDate, releaseDate);
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getDataManager().saveMute(mutedPlayer));
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getDataHandler().getDataManager().saveMute(mutedPlayer));
     }
 
     private int generateId() {
-        return plugin.getDataManager().getLastMuteId() + 1;
+        return plugin.getDataHandler().getDataManager().getLastMuteId() + 1;
     }
 }

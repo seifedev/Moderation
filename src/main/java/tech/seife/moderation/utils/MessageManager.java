@@ -9,8 +9,8 @@ import java.util.Map;
 public class MessageManager {
 
     public static String getTranslatedMessageWithReplace(Moderation plugin, String path, Map<ReplaceType, String> values) {
-        if (plugin.getCustomFiles() != null && plugin.getCustomFiles().getTranslationConfig() != null && plugin.getCustomFiles().getTranslationConfig().getString(path) != null) {
-            String message = plugin.getCustomFiles().getTranslationConfig().getString(path);
+        if (plugin.getDataHandler().getCustomFiles() != null && plugin.getDataHandler().getCustomFiles().getTranslationConfig() != null && plugin.getDataHandler().getCustomFiles().getTranslationConfig().getString(path) != null) {
+            String message = plugin.getDataHandler().getCustomFiles().getTranslationConfig().getString(path);
 
             for (Map.Entry<ReplaceType, String> entry : values.entrySet()) {
                 message = message.replaceAll(entry.getKey().getValue(), entry.getValue());
@@ -21,8 +21,8 @@ public class MessageManager {
     }
 
     public static String getTranslatedMessage(Moderation plugin, String path) {
-        if (plugin.getCustomFiles() != null && plugin.getCustomFiles().getTranslationConfig() != null && plugin.getCustomFiles().getTranslationConfig().getString(path) != null) {
-            return ChatColor.translateAlternateColorCodes('&', plugin.getCustomFiles().getTranslationConfig().getString(path));
+        if (plugin.getDataHandler().getCustomFiles() != null && plugin.getDataHandler().getCustomFiles().getTranslationConfig() != null && plugin.getDataHandler().getCustomFiles().getTranslationConfig().getString(path) != null) {
+            return ChatColor.translateAlternateColorCodes('&', plugin.getDataHandler().getCustomFiles().getTranslationConfig().getString(path));
         }
         return null;
     }

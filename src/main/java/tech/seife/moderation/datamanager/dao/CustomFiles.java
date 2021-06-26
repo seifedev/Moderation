@@ -28,6 +28,7 @@ public class CustomFiles {
 
     public CustomFiles(Moderation plugin) {
         this.plugin = plugin;
+        gson = new Gson();
         
         translationFile = new File(plugin.getDataFolder(), "translation.yml");
         createYamlFile(translationFile);
@@ -51,7 +52,6 @@ public class CustomFiles {
     }
 
     public Gson createGson(Moderation plugin) {
-        gson = new Gson();
 
         bansFile = new File(plugin.getDataFolder(), "bans.json");
         createFile(bansFile);

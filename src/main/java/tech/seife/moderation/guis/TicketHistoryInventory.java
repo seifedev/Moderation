@@ -34,8 +34,8 @@ public class TicketHistoryInventory {
 
                 AtomicInteger slot = new AtomicInteger();
                 ids.forEach(id -> {
-                    if (id != null && plugin.getDataManager().verifyTicketId(id, reporter)) {
-                        Ticket ticket = plugin.getDataManager().retrieveTicket(id, reporter);
+                    if (id != null && plugin.getDataHandler().getDataManager().verifyTicketId(id, reporter)) {
+                        Ticket ticket = plugin.getDataHandler().getDataManager().retrieveTicket(id, reporter);
 
                         if (ticket != null) {
                             idSlots.put(slot.getAndIncrement(), id);
