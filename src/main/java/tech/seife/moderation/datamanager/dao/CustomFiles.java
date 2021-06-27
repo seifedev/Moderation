@@ -77,6 +77,7 @@ public class CustomFiles {
 
         spiedText = new File(plugin.getDataFolder(), "spiedText.json");
         createFile(spiedText);
+        System.out.println("spiedText == null: " + spiedText == null);
 
         ticketsFile = new File(plugin.getDataFolder(), "tickets.json");
         createFile(ticketsFile);

@@ -20,10 +20,13 @@ import tech.seife.moderation.datamanager.dao.CachedData;
 import tech.seife.moderation.datamanager.dao.DataHandler;
 import tech.seife.moderation.datamanager.kicks.KickManager;
 import tech.seife.moderation.datamanager.mutes.MutedPlayerManager;
+import tech.seife.moderation.datamanager.spiedtext.SpiedText;
 import tech.seife.moderation.datamanager.spiedtext.SpiedTextManager;
 import tech.seife.moderation.datamanager.tickets.TicketManager;
 import tech.seife.moderation.events.*;
 import tech.seife.moderation.packets.HidePlayer;
+
+import javax.swing.text.View;
 
 public class Moderation extends JavaPlugin {
 
@@ -97,6 +100,7 @@ public class Moderation extends JavaPlugin {
         getCommand("setRules").setExecutor(new SetRules(this));
         getCommand("rules").setExecutor(new Rules(this));
         getCommand("who").setExecutor(new Who(this));
+        getCommand("viewSpiedText").setExecutor(new ViewSpiedText(spiedTextManager));
 
         if (chatUtilities != null) {
             getCommand("mute").setExecutor(new MutePlayer(this));

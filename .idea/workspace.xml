@@ -5,27 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3dc6bdbf-7f14-4e72-b345-f3f9bc83e2e9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/ViewSpiedText.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/Moderation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/Moderation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/ModerationScoreboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/ModerationScoreboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/bans/BanPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/bans/BanPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/support/ViewTickets.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/support/ViewTickets.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/banned/BannedPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/banned/BannedPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/banned/BannedPlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/banned/BannedPlayerManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/CustomFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/CustomFiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataManagerDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataManagerDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataManagerFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataManagerFiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/mutes/MutedPlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/mutes/MutedPlayerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnAsyncPlayerChatEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnAsyncPlayerChatEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnInventoryClickEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnInventoryClickEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnPlayerCommandPreprocessEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnPlayerCommandPreprocessEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnPlayerJoinEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnPlayerJoinEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/guis/TicketHistoryInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/guis/TicketHistoryInventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/utils/MessageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/utils/MessageManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/utils/ParseDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/utils/ParseDate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/bans.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bans.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/spiedText.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spiedText.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,13 +69,15 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -248,7 +237,8 @@
       <workItem from="1624640823771" duration="71000" />
       <workItem from="1624641196790" duration="15197000" />
       <workItem from="1624697365104" duration="9187000" />
-      <workItem from="1624723259874" duration="11613000" />
+      <workItem from="1624723259874" duration="15461000" />
+      <workItem from="1624782629499" duration="9567000" />
     </task>
     <task id="LOCAL-00001" summary="- Added better message system">
       <created>1617089519005</created>
@@ -278,7 +268,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624638144970</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="- Some Json Fixes, more to follow">
+      <created>1624742431508</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1624742431508</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -289,6 +286,7 @@
     <MESSAGE value="- Small database changes" />
     <MESSAGE value="- Small changes." />
     <MESSAGE value="- Better encapsulation." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Better encapsulation." />
+    <MESSAGE value="- Some Json Fixes, more to follow" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Some Json Fixes, more to follow" />
   </component>
 </project>

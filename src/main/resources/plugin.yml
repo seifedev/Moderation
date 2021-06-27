@@ -106,3 +106,10 @@ commands:
     description: unmute a player
     permission: moderation.unMute
     permission-message: You don't have permission to run this command.
+  viewSpiedText:
+    usage: </viewSpiedText> <player name>
+    description: see the messages that have been spied of a player
+    permission: moderation.viewSpiedText
+    permission-message: You don't have permission to run this command.
+
+

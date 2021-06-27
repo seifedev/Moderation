@@ -47,9 +47,7 @@ public class DataManagerFiles implements DataManager {
         }
 
 
-        int banId = 0;
-
-        banId = acquireNewBanId(allBans);
+        int banId = acquireNewBanId(allBans);
 
         JsonObject bansDetails = new JsonObject();
 
@@ -321,29 +319,22 @@ public class DataManagerFiles implements DataManager {
     public void saveTextFromChat(SpiedText spiedText) {
         JsonObject spiedTexts = gson.fromJson(gson.toJson(customFiles.getSpiedText()), JsonObject.class);
 
-        JsonObject uuidSection;
-        if (spiedTexts.getAsJsonObject(spiedText.getSenderUuid().toString()) != null) {
-            uuidSection = spiedTexts.getAsJsonObject(spiedText.getSenderUuid().toString());
-        } else {
-            uuidSection = new JsonObject();
-            uuidSection.addProperty("spiedPlayerUsername", spiedText.getPlayerUsername());
+        JsonObject uuidSection = new JsonObject();
+
+        if (spiedTexts.has(spiedText.getSenderUuid().toString())) {
+            for (Map.Entry<String, JsonElement> entry : spiedTexts.get(spiedText.getSenderUuid().toString()).getAsJsonObject().entrySet()) {
+                uuidSection.add(entry.getKey(), entry.getValue());
+            }
+            spiedTexts.remove(spiedText.getSenderUuid().toString());
+            uuidSection.remove("playerUsername");
         }
 
-        JsonObject spiedTextSection;
-        if (uuidSection.getAsJsonObject("spiedTexts") != null) {
-            spiedTextSection = uuidSection.getAsJsonObject("spiedText");
-        } else {
-            spiedTextSection = new JsonObject();
-        }
+        uuidSection.addProperty("playerUsername", spiedText.getPlayerUsername());
+        uuidSection.addProperty(spiedText.getDate().toString(), spiedText.getText());
 
-        JsonObject dateSection = new JsonObject();
-        dateSection.addProperty("text", spiedText.getText());
+        spiedTexts.add(spiedText.getSenderUuid().toString(), uuidSection);
 
-        spiedTextSection.add(spiedText.getDate().toString(), dateSection);
-
-        uuidSection.add(spiedText.getSenderUuid().toString(), spiedTextSection);
-
-        customFiles.saveSpiedText(gson.fromJson(uuidSection, Map.class));
+        customFiles.saveSpiedText(gson.fromJson(spiedTexts, Map.class));
     }
 
 
@@ -353,13 +344,15 @@ public class DataManagerFiles implements DataManager {
 
         Set<SpiedText> spiedTextSet = new HashSet<>();
 
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
 
         for (Map.Entry<String, JsonElement> entry : spiedTexts.entrySet()) {
-            if (spiedTexts.getAsJsonObject(entry.getKey()).get("spiedPlayerUsername").getAsString().equalsIgnoreCase(playerUsername)) {
-                JsonObject spiedTextsSection = spiedTexts.getAsJsonObject("spiedText");
+            if (entry.getValue().getAsJsonObject().has("playerUsername") && entry.getValue().getAsJsonObject().get("playerUsername").getAsString().equalsIgnoreCase(playerUsername)) {
+                for (Map.Entry<String, JsonElement> details : entry.getValue().getAsJsonObject().entrySet()) {
 
-                for (Map.Entry<String, JsonElement> dates : spiedTexts.entrySet()) {
-                    spiedTextSet.add(new SpiedText(UUID.fromString(entry.getKey()), playerUsername, spiedTextsSection.getAsJsonObject(dates.getKey()).get("texts").getAsString(), LocalDateTime.parse(dates.getKey())));
+                    if (details.getKey() != null && !details.getKey().equalsIgnoreCase("playerUsername")) {
+                        spiedTextSet.add(new SpiedText(UUID.fromString(entry.getKey()), playerUsername, details.getValue().getAsString(), LocalDateTime.parse(details.getKey(), dateTimeFormatter)));
+                    }
                 }
             }
         }
@@ -571,7 +564,7 @@ public class DataManagerFiles implements DataManager {
         for (Map.Entry<String, JsonElement> elementEntry : mutes.entrySet()) {
             JsonObject muteDetails = mutes.getAsJsonObject(elementEntry.getKey());
 
-            if (muteDetails.get("mutedByUsername").getAsString().equalsIgnoreCase(playerUsername) && muteDetails.get("channelName").equals(channelName)) {
+            if (muteDetails.get("mutedByUsername").getAsString().equalsIgnoreCase(playerUsername) && muteDetails.get("channelName").getAsString().equals(channelName)) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
                 return new MutedPlayer(parseIntegerFromString(elementEntry.getKey()), UUID.fromString(muteDetails.get("mutedByUuid").getAsString()), UUID.fromString(muteDetails.get("mutedPlayerUuid").getAsString()), muteDetails.get("mutedByUsername").getAsString(), muteDetails.get("mutedPlayerUsername").getAsString(), muteDetails.get("channelName").getAsString(), LocalDateTime.parse(muteDetails.get("mutedDate").getAsString(), formatter), LocalDateTime.parse(muteDetails.get("releaseDate").getAsString(), formatter));
