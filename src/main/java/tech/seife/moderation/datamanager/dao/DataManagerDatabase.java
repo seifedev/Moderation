@@ -531,11 +531,9 @@ public class DataManagerDatabase implements DataManager {
 
     @Override
     public void removeMute(String playerName, String channelName) {
-        System.out.println(0);
         String sqlQuery = "SELECT * FROM current_mutes LEFT JOIN mutes m on current_mutes.mute_id = m.id WHERE player_username = ? and channel_name = ?";
         try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
-            System.out.println(1);
 
             ps.setString(1, playerName);
             ps.setString(2, channelName);
@@ -543,7 +541,6 @@ public class DataManagerDatabase implements DataManager {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                System.out.println(2);
                 moveCurrentMuteToMuteHistory(rs.getInt("m.id"));
                 deleteCurrentMute(rs.getInt("m.id"));
             }
@@ -569,13 +566,11 @@ public class DataManagerDatabase implements DataManager {
     }
 
     private void deleteCurrentMute(int id) {
-        System.out.println(3);
         String sqlQuery = "DELETE FROM current_mutes WHERE id = ?";
 
         try (Connection connection = plugin.getDataHandler().getConnectionPoolManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
 
-            System.out.println(4);
             ps.setInt(1, id);
 
             ps.executeUpdate();

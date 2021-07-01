@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class BansHistoryInventory {
+public class BansHistoryInventory   {
 
     private final Inventory banHistoryInventory;
     private final Moderation plugin;

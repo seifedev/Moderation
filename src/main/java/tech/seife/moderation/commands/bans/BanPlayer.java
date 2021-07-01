@@ -1,6 +1,5 @@
 package tech.seife.moderation.commands.bans;
 
-import net.sf.cglib.core.Local;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,7 +14,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class BanPlayer implements CommandExecutor {
 
@@ -32,7 +30,7 @@ public class BanPlayer implements CommandExecutor {
 
         Player player = Bukkit.getPlayer(args[0]);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
-        LocalDateTime banReleaseDate = LocalDateTime.parse(ParseDate.transformInputToDateInstant(args[1]), dateTimeFormatter).plusHours(3);
+        LocalDateTime banReleaseDate = LocalDateTime.parse(ParseDate.transformInputToDateInstant(args[1]), dateTimeFormatter);
 
         String bannedReason = getBanReason(args);
 

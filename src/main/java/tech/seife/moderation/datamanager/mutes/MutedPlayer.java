@@ -50,6 +50,10 @@ public class MutedPlayer {
         return mutedDate;
     }
 
+    public String getMutedPlayerUsername() {
+        return mutedPlayerUsername;
+    }
+
     public LocalDateTime getReleaseDate() {
         return releaseDate;
     }

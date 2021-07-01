@@ -39,8 +39,6 @@ public class ViewSpiedText implements CommandExecutor {
 
         BookMeta bookMeta = (BookMeta) itemStack.getItemMeta();
 
-        System.out.println(pastMessages.size());
-
         for (SpiedText spiedText : pastMessages) {
             bookMeta.addPage("Date: " + spiedText.getDate() + "        Message: " + spiedText.getText());
         }

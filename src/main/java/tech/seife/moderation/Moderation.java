@@ -18,15 +18,11 @@ import tech.seife.moderation.commands.support.ViewTickets;
 import tech.seife.moderation.datamanager.banned.BannedPlayerManager;
 import tech.seife.moderation.datamanager.dao.CachedData;
 import tech.seife.moderation.datamanager.dao.DataHandler;
-import tech.seife.moderation.datamanager.kicks.KickManager;
 import tech.seife.moderation.datamanager.mutes.MutedPlayerManager;
-import tech.seife.moderation.datamanager.spiedtext.SpiedText;
 import tech.seife.moderation.datamanager.spiedtext.SpiedTextManager;
 import tech.seife.moderation.datamanager.tickets.TicketManager;
 import tech.seife.moderation.events.*;
 import tech.seife.moderation.packets.HidePlayer;
-
-import javax.swing.text.View;
 
 public class Moderation extends JavaPlugin {
 
@@ -74,11 +70,14 @@ public class Moderation extends JavaPlugin {
     }
 
     private void registerChatUtilities() {
-        if (getServer().getPluginManager().isPluginEnabled("ChatUtilities")) {
-            chatUtilities = (ChatUtilities) Bukkit.getPluginManager().getPlugin("ChatUtilities");
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            if (getServer().getPluginManager().isPluginEnabled("ChatUtilities")) {
+                chatUtilities = (ChatUtilities) Bukkit.getPluginManager().getPlugin("ChatUtilities");
 
-            mutedPlayerManager = new MutedPlayerManager(this);
-        }
+                mutedPlayerManager = new MutedPlayerManager(this);
+                loadLater();
+            }
+        }, 100);
     }
 
     private void registerCommands() {
@@ -102,10 +101,7 @@ public class Moderation extends JavaPlugin {
         getCommand("who").setExecutor(new Who(this));
         getCommand("viewSpiedText").setExecutor(new ViewSpiedText(spiedTextManager));
 
-        if (chatUtilities != null) {
-            getCommand("mute").setExecutor(new MutePlayer(this));
-            getCommand("unmute").setExecutor(new UnMutePlayer(this, dataHandler.getDataManager(), chatUtilities.getChannelManager()));
-        }
+
     }
 
     private void registerEvents() {
@@ -116,7 +112,17 @@ public class Moderation extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new OnPlayerCommandPreprocessEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new OnInventoryClickEvent(this), this);
 
-        Bukkit.getPluginManager().registerEvents(new OnAsyncPlayerChatEvent(this, chatUtilities.getChannelManager()), this);
+
+    }
+
+    private void loadLater() {
+        if (chatUtilities != null) {
+            Bukkit.getPluginManager().registerEvents(new OnAsyncPlayerChatEvent(this, chatUtilities.getChannelManager()), this);
+            if (chatUtilities != null) {
+                getCommand("mute").setExecutor(new MutePlayer(this));
+                getCommand("unmute").setExecutor(new UnMutePlayer(this, dataHandler.getDataManager(), chatUtilities.getChannelManager()));
+            }
+        }
     }
 
     @Override

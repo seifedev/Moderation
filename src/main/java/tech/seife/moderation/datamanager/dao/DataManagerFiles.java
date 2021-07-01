@@ -12,10 +12,7 @@ import tech.seife.moderation.datamanager.tickets.Ticket;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -216,9 +213,6 @@ public class DataManagerFiles implements DataManager {
                                             detailsObj.get("reason").getAsString(),
                                             LocalDateTime.parse(details.getKey(), dateTimeFormatter),
                                             LocalDateTime.parse(detailsObj.get("releaseDate").getAsString(), dateTimeFormatter));
-
-                                    System.out.println("bannedDate: " + bannedPlayer.getBannedDate());
-                                    System.out.println("releaseDate: " + bannedPlayer.getReleaseDate());
 
                                     return bannedPlayer;
                                 }
@@ -444,20 +438,52 @@ public class DataManagerFiles implements DataManager {
     public void saveMute(MutedPlayer mutedPlayer) {
         JsonObject mutes = gson.fromJson(gson.toJson(customFiles.getMutesFile()), JsonObject.class);
 
-        JsonObject muteDetails = new JsonObject();
-        muteDetails.addProperty("channelName", mutedPlayer.getChannelName());
-        muteDetails.addProperty("mutedByUuid", mutedPlayer.getMutedByUuid().toString());
-        muteDetails.addProperty("mutedByUsername", mutedPlayer.getMutedByUsername());
-        muteDetails.addProperty("mutedPlayerUuid", mutedPlayer.getMutedPlayerUuid().toString());
-        muteDetails.addProperty("mutedPlayerUsername", mutedPlayer.getMutedByUsername());
-        muteDetails.addProperty("mutedDate", mutedPlayer.getMutedDate().toString());
-        muteDetails.addProperty("releaseDate", mutedPlayer.getReleaseDate().toString());
+        JsonObject uuidSection = new JsonObject();
 
-        mutes.add(String.valueOf(mutedPlayer.getId()), muteDetails);
+        int latestId = 0;
 
-        customFiles.saveMutes(gson.fromJson(mutes, Map.class));
+        JsonObject channelsMuted = new JsonObject();
+
+        if (mutes.has(mutedPlayer.getMutedPlayerUuid().toString())) {
+            for (Map.Entry<String, JsonElement> entry : mutes.get(mutedPlayer.getMutedPlayerUuid().toString()).getAsJsonObject().entrySet()) {
+                if (!entry.getKey().equalsIgnoreCase("mutedPlayerName")) {
+                    uuidSection.add(entry.getKey(), entry.getValue());
+                }
+            }
+
+            latestId = mutes.get("latestId").getAsInt();
+
+            uuidSection.remove("latestId");
+            uuidSection.remove("mutedPlayerUsername");
+        }
+
+        uuidSection.addProperty("mutedPlayerUsername", mutedPlayer.getMutedPlayerUsername());
+        mutes.addProperty("latestId", ++latestId);
+
+        if (uuidSection.has(mutedPlayer.getMutedByUuid().toString())) {
+            for (Map.Entry<String, JsonElement> entry : uuidSection.getAsJsonObject(mutedPlayer.getMutedByUuid().toString()).getAsJsonObject("channels").entrySet()) {
+                channelsMuted.add(entry.getKey(), entry.getValue());
+            }
+        }
+
+        channelsMuted.addProperty(mutedPlayer.getChannelName(), mutedPlayer.getId());
+
+        JsonObject mutedBy = new JsonObject();
+
+        mutedBy.add("channels", channelsMuted);
+        mutedBy.addProperty("mutedByUsername", mutedPlayer.getMutedByUsername());
+        mutedBy.addProperty("mutedDate", mutedPlayer.getMutedDate().toString());
+        mutedBy.addProperty("releaseDate", mutedPlayer.getReleaseDate().toString());
+        mutedBy.addProperty("muteId", mutedPlayer.getId());
+
+        uuidSection.add(mutedPlayer.getMutedByUuid().toString(), mutedBy);
+
+
+        mutes.add(mutedPlayer.getMutedPlayerUuid().toString(), uuidSection);
 
         saveMuteToCurrentMutes(mutedPlayer.getId());
+
+        customFiles.saveMutes(gson.fromJson(mutes, Map.class));
     }
 
     private void saveMuteToCurrentMutes(int muteId) {
@@ -468,27 +494,40 @@ public class DataManagerFiles implements DataManager {
             mutes = new JsonArray();
         } else {
             mutes = currentMutes.get("mutes").getAsJsonArray();
+            currentMutes.remove("mutes");
         }
 
         mutes.add(muteId);
 
         currentMutes.add("mutes", mutes);
+
+        customFiles.saveCurrentMutes(gson.fromJson(currentMutes, Map.class));
+
     }
 
     @Override
     public void removeMute(String playerUsername, String channelName) {
-        if (isPlayerMutedByUsername(playerUsername, channelName)) {
-            JsonObject mutes = gson.fromJson(gson.toJson(customFiles.getMutesFile()), JsonObject.class);
+        JsonObject currentMutes = gson.fromJson(gson.toJson(customFiles.getCurrentMutesFile()), JsonObject.class);
 
-            for (Map.Entry<String, JsonElement> elementEntry : mutes.entrySet()) {
-                JsonObject muteDetails = mutes.getAsJsonObject(elementEntry.getKey());
+        if (currentMutes.getAsJsonArray("mutes") == null) return;
 
-                if (muteDetails.get("mutedByUsername").getAsString().equalsIgnoreCase(playerUsername) && muteDetails.get("channelName").getAsString().equalsIgnoreCase(channelName)) {
-                    removeFromCurrentMutes(parseIntegerFromString(elementEntry.getKey()));
-                }
+
+        JsonObject mutes = gson.fromJson(gson.toJson(customFiles.getMutesFile()), JsonObject.class);
+
+
+        Map<String, Integer> map = new HashMap<>();
+
+        for (Map.Entry<String, JsonElement> entry : mutes.entrySet()) {
+            map = getListOfMutedChannelsForPlayer(playerUsername, entry);
+        }
+
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(channelName)) {
+                removeFromCurrentMutes(entry.getValue());
             }
         }
     }
+
 
     private void removeFromCurrentMutes(int muteId) {
         JsonObject currentMutes = gson.fromJson(gson.toJson(customFiles.getCurrentMutesFile()), JsonObject.class);
@@ -500,10 +539,13 @@ public class DataManagerFiles implements DataManager {
             mutes = currentMutes.get("mutes").getAsJsonArray();
         }
 
-        if (mutes.get(muteId) != null) {
-            mutes.remove(muteId);
-            moveMuteToMutesHistory(muteId);
-            customFiles.saveCurrentMutes(gson.fromJson(currentMutes, Map.class));
+        for (JsonElement element : mutes) {
+            if (element.getAsInt() == muteId) {
+                mutes.remove(element);
+                moveMuteToMutesHistory(muteId);
+                customFiles.saveCurrentMutes(gson.fromJson(currentMutes, Map.class));
+                return;
+            }
         }
     }
 
@@ -517,26 +559,47 @@ public class DataManagerFiles implements DataManager {
             mutes = muteHistory.get("mutes").getAsJsonArray();
         }
 
-        if (mutes.get(muteId) != null) {
-            mutes.add(muteId);
-            customFiles.saveHistoryMutes(gson.fromJson(muteHistory, Map.class));
 
+        for (JsonElement element : mutes) {
+            if (element.getAsInt() == muteId) {
+            }
         }
     }
 
     @Override
     public boolean isPlayerMutedByUuid(UUID playerUuid, String channelName) {
         JsonObject currentMutes = gson.fromJson(gson.toJson(customFiles.getCurrentMutesFile()), JsonObject.class);
-
         JsonObject mutes = gson.fromJson(gson.toJson(customFiles.getMutesFile()), JsonObject.class);
 
-        for (Map.Entry<String, JsonElement> elementEntry : currentMutes.entrySet()) {
-            JsonObject muteDetails = mutes.getAsJsonObject(elementEntry.getKey());
+        if (!mutes.has(playerUuid.toString())) return false;
 
-            if (muteDetails.get("mutedUuid").getAsString().equalsIgnoreCase(playerUuid.toString()) && muteDetails.get("channelName").getAsString().equalsIgnoreCase(channelName)) {
-                return true;
+        JsonObject uuidSection = mutes.getAsJsonObject(playerUuid.toString());
+
+
+        Set<Integer> idSet = new HashSet<>();
+
+        if (currentMutes.has("mutes")) {
+            for (JsonElement element : currentMutes.getAsJsonArray("mutes")) {
+                idSet.add(element.getAsInt());
             }
         }
+
+        // TODO: 6/29/2021 Fix this method, not quite good when it comes to performance.
+        for (Map.Entry<String, JsonElement> entry : uuidSection.entrySet()) {
+            if (entry.getValue().isJsonObject()) {
+                for (Map.Entry<String, JsonElement> details : entry.getValue().getAsJsonObject().entrySet()) {
+                    if (details.getKey().equalsIgnoreCase("channels")) {
+                        for (Map.Entry<String, JsonElement> channel : details.getValue().getAsJsonObject().entrySet()) {
+                            if (idSet.contains(channel.getValue().getAsInt())) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
         return false;
     }
 
@@ -545,15 +608,24 @@ public class DataManagerFiles implements DataManager {
     public boolean isPlayerMutedByUsername(String playerUsername, String channelName) {
         JsonObject currentMutes = gson.fromJson(gson.toJson(customFiles.getCurrentMutesFile()), JsonObject.class);
 
+        if (currentMutes.getAsJsonArray("mutes") == null) return false;
+
+
         JsonObject mutes = gson.fromJson(gson.toJson(customFiles.getMutesFile()), JsonObject.class);
 
-        for (Map.Entry<String, JsonElement> elementEntry : currentMutes.entrySet()) {
-            JsonObject muteDetails = mutes.getAsJsonObject(elementEntry.getKey());
 
-            if (muteDetails.get("mutedUsername").getAsString().equalsIgnoreCase(playerUsername) && muteDetails.get("channelName").getAsString().equalsIgnoreCase(channelName)) {
-                return true;
+        Map<String, Integer> map = new HashMap<>();
+
+        // TODO: 6/30/2021 It needs optimization.
+        for (Map.Entry<String, JsonElement> entry : mutes.entrySet()) {
+            map = getListOfMutedChannelsForPlayer(playerUsername, entry);
+            for (JsonElement element : currentMutes.getAsJsonArray("mutes")) {
+                if (map.containsValue(element.getAsInt())) {
+                    return true;
+                }
             }
         }
+
         return false;
     }
 
@@ -561,15 +633,13 @@ public class DataManagerFiles implements DataManager {
     public MutedPlayer loadMutedPlayer(String playerUsername, String channelName) {
         JsonObject mutes = gson.fromJson(gson.toJson(customFiles.getMutesFile()), JsonObject.class);
 
-        for (Map.Entry<String, JsonElement> elementEntry : mutes.entrySet()) {
-            JsonObject muteDetails = mutes.getAsJsonObject(elementEntry.getKey());
-
-            if (muteDetails.get("mutedByUsername").getAsString().equalsIgnoreCase(playerUsername) && muteDetails.get("channelName").getAsString().equals(channelName)) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-                return new MutedPlayer(parseIntegerFromString(elementEntry.getKey()), UUID.fromString(muteDetails.get("mutedByUuid").getAsString()), UUID.fromString(muteDetails.get("mutedPlayerUuid").getAsString()), muteDetails.get("mutedByUsername").getAsString(), muteDetails.get("mutedPlayerUsername").getAsString(), muteDetails.get("channelName").getAsString(), LocalDateTime.parse(muteDetails.get("mutedDate").getAsString(), formatter), LocalDateTime.parse(muteDetails.get("releaseDate").getAsString(), formatter));
+        for (Map.Entry<String, JsonElement> entry : mutes.entrySet()) {
+            if (entry.getValue().getAsJsonObject() != null && entry.getValue().getAsJsonObject().has("mutedPlayerUsername")) {
+                System.out.println("entry.getKey(): " + entry.getKey());
+                System.out.println("entry.getValue  (): " + entry.getValue());
             }
         }
+
         return null;
     }
 
@@ -593,8 +663,30 @@ public class DataManagerFiles implements DataManager {
     public int getLastMuteId() {
         JsonObject mutes = gson.fromJson(gson.toJson(customFiles.getMutesFile()), JsonObject.class);
 
-        JsonArray ids = mutes.getAsJsonArray("mutes");
-
-        return ids.size();
+        return mutes.has("latestId") ? mutes.get("latestId").getAsInt() : 0;
     }
+
+    private Map<String, Integer> getListOfMutedChannelsForPlayer(String playerUsername, Map.Entry<String, JsonElement> entry) {
+        if (entry.getKey().equalsIgnoreCase("latestId")) return null;
+
+        Map<String, Integer> map = new HashMap<>();
+
+        if (entry.getValue().getAsJsonObject().get("mutedPlayerUsername").getAsString().equals(playerUsername)) {
+            if (entry.getValue().isJsonObject()) {
+                for (Map.Entry<String, JsonElement> details : entry.getValue().getAsJsonObject().entrySet()) {
+                    if (details.getValue().isJsonObject() && details.getValue().getAsJsonObject().has("channels")) {
+                        for (Map.Entry<String, JsonElement> channelsObject : details.getValue().getAsJsonObject().entrySet()) {
+                            if (channelsObject.getKey().equalsIgnoreCase("channels")) {
+                                for (Map.Entry<String, JsonElement> channelsDetails : channelsObject.getValue().getAsJsonObject().entrySet()) {
+                                    map.put(channelsDetails.getKey(), channelsDetails.getValue().getAsInt());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return map;
+    }
+
 }
