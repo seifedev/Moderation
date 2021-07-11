@@ -36,6 +36,7 @@ public class MutePlayer implements CommandExecutor {
                 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
                 LocalDateTime muteReleaseDate = LocalDateTime.parse(ParseDate.transformInputToDateInstant(args[2]), dateTimeFormatter);
 
+
                 String channelName = plugin.getChatUtilities().getChannelManager().getChannel(args[1]).getName();
 
                 Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getMutedPlayerManager().addMutedPlayer(mutedBy.getUniqueId(), mutedPlayer.getUniqueId(), mutedBy.getName(), mutedPlayer.getName(), channelName, LocalDateTime.now(), muteReleaseDate));

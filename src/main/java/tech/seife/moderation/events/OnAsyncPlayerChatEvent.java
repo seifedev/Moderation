@@ -6,10 +6,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import tech.seife.chatutilities.channels.ChannelManager;
 import tech.seife.moderation.Moderation;
-import tech.seife.moderation.datamanager.dao.DataManager;
-import tech.seife.moderation.datamanager.spiedtext.SpiedText;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class OnAsyncPlayerChatEvent implements Listener {
 
@@ -31,7 +30,6 @@ public class OnAsyncPlayerChatEvent implements Listener {
                             if (canUnmute(e.getPlayer().getName(), channel.getName())) {
                                 plugin.getDataHandler().getDataManager().removeMute(e.getPlayer().getName(), channel.getName());
                             } else {
-                                e.getPlayer().sendMessage("You're muted in this channel");
                                 e.setCancelled(true);
                             }
                         }
@@ -41,8 +39,12 @@ public class OnAsyncPlayerChatEvent implements Listener {
 
     private boolean canUnmute(String playerUsername, String channelName) {
         if (plugin.getDataHandler().getDataManager() != null && plugin.getDataHandler().getDataManager().loadMutedPlayer(playerUsername, channelName) != null && plugin.getDataHandler().getDataManager().loadMutedPlayer(playerUsername, channelName).getReleaseDate() != null) {
-            return LocalDateTime.now().isAfter(plugin.getDataHandler().getDataManager().loadMutedPlayer(playerUsername, channelName).getReleaseDate());
+            LocalDateTime dateTime = LocalDateTime.parse(LocalDateTime.now().toString());
+            System.out.println("dateTime: " + dateTime);
+            System.out.println("plugin.getDataHandler().getDataManager().loadMutedPlayer(playerUsername, channelName).getReleaseDate(): " + plugin.getDataHandler().getDataManager().loadMutedPlayer(playerUsername, channelName).getReleaseDate());
+            return dateTime.isAfter(plugin.getDataHandler().getDataManager().loadMutedPlayer(playerUsername, channelName).getReleaseDate());
         } else {
+            System.out.println("6");
             return true;
         }
     }

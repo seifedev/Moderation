@@ -1,91 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="3dc6bdbf-7f14-4e72-b345-f3f9bc83e2e9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Moderation.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Moderation.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Moderation.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1ff2c649-ffaf-4e9e-ba7d-30938bb33740.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1ff2c649-ffaf-4e9e-ba7d-30938bb33740.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1ff2c649-ffaf-4e9e-ba7d-30938bb33740/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1ff2c649-ffaf-4e9e-ba7d-30938bb33740/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/Moderation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/Moderation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/ModerationScoreboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/ModerationScoreboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/CancelInspectionMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/CancelInspectionMode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/InspectPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/InspectPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/KickPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/KickPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/Rules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/Rules.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/SetRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/SetRules.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/Vanish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/Vanish.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/Who.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/Who.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/bans/BanPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/bans/BanPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/bans/RemoveBan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/bans/RemoveBan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/bans/ViewPlayerBanHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/bans/ViewPlayerBanHistory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/mutes/MutePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/mutes/MutePlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/mutes/UnMutePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/mutes/UnMutePlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/DisableSpyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/DisableSpyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/EnableSpyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/EnableSpyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/ReadBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/ReadBook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/ViewEnderChest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/ViewEnderChest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/ViewNormaInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/ViewNormaInventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/ViewSpiedText.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/spy/ViewSpiedText.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/support/TicketApply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/support/TicketApply.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/support/TicketInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/support/TicketInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/support/ViewTickets.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/commands/support/ViewTickets.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/banned/BannedPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/banned/BannedPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/banned/BannedPlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/banned/BannedPlayerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/CachedData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/CachedData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/ConnectionPoolManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/ConnectionPoolManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/CustomFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/CustomFiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataManagerDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataManagerDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataManagerFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/DataManagerFiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/SQLManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/dao/SQLManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/kicks/Kick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/kicks/Kick.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/kicks/KickManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/kicks/KickManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/mutes/MutedPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/mutes/MutedPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/mutes/MutedPlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/mutes/MutedPlayerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/spiedtext/SpiedText.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/spiedtext/SpiedText.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/spiedtext/SpiedTextManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/spiedtext/SpiedTextManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/tickets/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/tickets/Ticket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/tickets/TicketManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/datamanager/tickets/TicketManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/enums/ReplaceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/enums/ReplaceType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnAsyncPlayerChatEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnAsyncPlayerChatEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnInventoryClickEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnInventoryClickEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnPlayerCommandPreprocessEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnPlayerCommandPreprocessEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnPlayerEditBookEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnPlayerEditBookEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnPlayerJoinEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnPlayerJoinEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnPlayerQuitEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnPlayerQuitEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnSignChangeEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/events/OnSignChangeEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/guis/BansHistoryInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/guis/BansHistoryInventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/guis/TicketHistoryInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/guis/TicketHistoryInventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/packets/HidePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/packets/HidePlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/packets/RemoveFromTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/packets/RemoveFromTab.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/utils/MessageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/utils/MessageManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/utils/MojangApiQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/utils/MojangApiQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/utils/ParseDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/seife/moderation/utils/ParseDate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bans.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bans.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bansHistory.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bansHistory.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/currentBans.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/currentBans.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/currentMutes.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/currentMutes.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/kicks.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/kicks.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mutes.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mutes.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mutesHistory.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mutesHistory.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/spiedText.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spiedText.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tickets.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tickets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/translation.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translation.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +45,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ChatUtilities" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -141,7 +67,7 @@
       <recent name="io.github.seifedeveloper.moderation.tickets" />
     </key>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -320,6 +246,19 @@
       <workItem from="1625129031525" duration="974000" />
       <workItem from="1625133571790" duration="151000" />
       <workItem from="1625133733316" duration="3606000" />
+      <workItem from="1625154607377" duration="6303000" />
+      <workItem from="1625169958112" duration="3880000" />
+      <workItem from="1625246062893" duration="532000" />
+      <workItem from="1625247168145" duration="601000" />
+      <workItem from="1625415901964" duration="600000" />
+      <workItem from="1625855805335" duration="143000" />
+      <workItem from="1625856374596" duration="17000" />
+      <workItem from="1625856429822" duration="146000" />
+      <workItem from="1625857793976" duration="7000" />
+      <workItem from="1625951540701" duration="602000" />
+      <workItem from="1625997437431" duration="768000" />
+      <workItem from="1625998241300" duration="604000" />
+      <workItem from="1626003917522" duration="6078000" />
     </task>
     <task id="LOCAL-00001" summary="- Added better message system">
       <created>1617089519005</created>
@@ -367,7 +306,7 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="- Added better message system" />
@@ -377,31 +316,5 @@
     <MESSAGE value="- Some Json Fixes, more to follow" />
     <MESSAGE value="More Json fixes and a new command." />
     <option name="LAST_COMMIT_MESSAGE" value="More Json fixes and a new command." />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="779" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1625128802825">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state x="779" y="311" width="424" height="491" key="FileChooserDialogImpl/72.27.1848.1053@72.27.1848.1053" timestamp="1625128802825" />
-    <state width="1802" height="275" key="GridCell.Tab.0.bottom" timestamp="1625141815832">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state width="1802" height="275" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1625141815832" />
-    <state width="1802" height="275" key="GridCell.Tab.0.center" timestamp="1625141815831">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state width="1802" height="275" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1625141815831" />
-    <state width="1802" height="275" key="GridCell.Tab.0.left" timestamp="1625141815831">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state width="1802" height="275" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1625141815831" />
-    <state width="1802" height="275" key="GridCell.Tab.0.right" timestamp="1625141815831">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state width="1802" height="275" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1625141815831" />
-    <state x="687" y="162" width="618" height="783" key="find.popup" timestamp="1625140731637">
-      <screen x="72" y="27" width="1848" height="1053" />
-    </state>
-    <state x="687" y="162" width="618" height="783" key="find.popup/72.27.1848.1053@72.27.1848.1053" timestamp="1625140731637" />
   </component>
 </project>
