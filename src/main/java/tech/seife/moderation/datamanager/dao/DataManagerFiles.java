@@ -358,15 +358,39 @@ public class DataManagerFiles implements DataManager {
     public void saveTicket(Ticket ticket) {
         JsonObject tickets = gson.fromJson(gson.toJson(customFiles.getTicketsFile()), JsonObject.class);
 
-        JsonObject ticketId = new JsonObject();
 
-        ticketId.addProperty("reporterUuid", ticket.getReporterUuid().toString());
-        ticketId.addProperty("reporterUsername", ticket.getReporterUsername());
-        ticketId.addProperty("smallDescription", ticket.getSmallDescription());
-        ticketId.addProperty("description", ticket.getDescription());
-        ticketId.addProperty("creationDate", ticket.getCreationDate().toString());
+        JsonObject uuidAllTickets = new JsonObject();
 
-        tickets.add(String.valueOf(ticket.getId()), ticketId);
+        if (tickets.has(ticket.getReporterUuid().toString())) {
+            for (Map.Entry<String, JsonElement> details : tickets.get(ticket.getReporterUuid().toString()).getAsJsonObject().entrySet()) {
+                uuidAllTickets.add(details.getKey(), details.getValue());
+            }
+            tickets.remove(ticket.getReporterUuid().toString());
+        }
+
+        System.out.println("uuidAllTickets: " + uuidAllTickets);
+
+        JsonObject details = new JsonObject();
+
+        details.addProperty("smallDescription", ticket.getSmallDescription());
+        details.addProperty("description", ticket.getDescription());
+        details.addProperty("creationDate", ticket.getCreationDate().toString());
+
+        if (uuidAllTickets.has("username")) {
+            uuidAllTickets.remove("username");
+        }
+
+        uuidAllTickets.addProperty("username", ticket.getReporterUsername());
+
+        uuidAllTickets.add(String.valueOf(ticket.getId()), details);
+
+        if (tickets.has("latestId")) {
+            tickets.remove("latestId");
+        }
+
+        tickets.addProperty("latestId", ticket.getId());
+
+        tickets.add(ticket.getReporterUuid().toString(), uuidAllTickets);
 
         customFiles.saveTicketFiles(gson.fromJson(tickets, Map.class));
     }
@@ -376,8 +400,8 @@ public class DataManagerFiles implements DataManager {
         JsonObject tickets = gson.fromJson(gson.toJson(customFiles.getTicketsFile()), JsonObject.class);
 
         int count = 0;
-        for (Map.Entry<String, JsonElement> element : tickets.entrySet()) {
-            if (tickets.get(element.getKey()).getAsJsonObject().get("reporterUsername").getAsString().equalsIgnoreCase(playerUsername)) {
+        for (Map.Entry<String, JsonElement> entry : tickets.entrySet()) {
+            if (entry.getValue().isJsonObject() && entry.getValue().getAsJsonObject().has("username") && entry.getValue().getAsJsonObject().get("username").getAsString().equalsIgnoreCase(playerUsername)) {
                 count++;
             }
         }
@@ -390,9 +414,15 @@ public class DataManagerFiles implements DataManager {
         JsonObject tickets = gson.fromJson(gson.toJson(customFiles.getTicketsFile()), JsonObject.class);
 
         Set<Integer> ids = new HashSet<>();
-        for (Map.Entry<String, JsonElement> element : tickets.entrySet()) {
-            if (tickets.get(element.getKey()).getAsJsonObject().get("reporterUsername").getAsString().equalsIgnoreCase(playerUsername)) {
-                ids.add(parseIntegerFromString(element.getKey()));
+        for (Map.Entry<String, JsonElement> entry : tickets.entrySet()) {
+            if (entry.getValue().isJsonObject() && entry.getValue().getAsJsonObject().has("username") && entry.getValue().getAsJsonObject().get("username").getAsString().equalsIgnoreCase(playerUsername)) {
+                if (entry.getValue().isJsonObject()) {
+                    for (Map.Entry<String, JsonElement> details : entry.getValue().getAsJsonObject().entrySet()) {
+                        if (!details.getKey().equalsIgnoreCase("username")) {
+                            ids.add(Integer.parseInt(details.getKey()));
+                        }
+                    }
+                }
             }
         }
         return ids;
@@ -402,36 +432,43 @@ public class DataManagerFiles implements DataManager {
     public Ticket retrieveTicket(int id, String playerUsername) {
         JsonObject tickets = gson.fromJson(gson.toJson(customFiles.getTicketsFile()), JsonObject.class);
 
-        JsonObject ticket = tickets.get(String.valueOf(id)).getAsJsonObject();
+        for (Map.Entry<String, JsonElement> entry : tickets.entrySet()) {
+            if (entry.getValue().isJsonObject() && entry.getValue().getAsJsonObject().has("username") && entry.getValue().getAsJsonObject().get("username").getAsString().equalsIgnoreCase(playerUsername)) {
+                if (entry.getValue().isJsonObject()) {
+                    for (Map.Entry<String, JsonElement> details : entry.getValue().getAsJsonObject().entrySet()) {
+                        if (!details.getKey().equalsIgnoreCase("username")) {
+                            if (Integer.parseInt(details.getKey()) == id) {
 
-        if (ticket != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-            return new Ticket(id, UUID.fromString(ticket.get("reporterUuid").getAsString()), playerUsername, ticket.get("smallDescription").getAsString(), ticket.get("description").getAsString(), LocalDateTime.parse(ticket.get("creationDate").getAsString(), formatter));
+                                return new Ticket(id,
+                                        UUID.fromString(entry.getKey()),
+                                        entry.getValue().getAsJsonObject().get("username").getAsString(),
+                                        details.getValue().getAsJsonObject().get("smallDescription").getAsString(),
+                                        details.getValue().getAsJsonObject().get("description").getAsString(),
+                                        LocalDateTime.parse(details.getValue().getAsJsonObject().get("creationDate").getAsString(), DateTimeFormatter.ISO_DATE_TIME))
+                                ;
+                            }
+                        }
+                    }
+                }
+            }
         }
+
         return null;
     }
 
     @Override
     public boolean verifyTicketId(int id, String playerUsername) {
-        JsonObject tickets = gson.fromJson(gson.toJson(customFiles.getTicketsFile()), JsonObject.class);
+        Set<Integer> ids = retrieveTicketsIdForPlayer(playerUsername);
 
-        for (Map.Entry<String, JsonElement> element : tickets.entrySet()) {
-            if (parseIntegerFromString(element.getKey()) == id && tickets.get(element.getKey()).getAsJsonObject().get("reporterUsername").getAsString().equalsIgnoreCase(playerUsername)) {
-                return true;
-            }
-        }
-        return false;
+        return ids.contains(id);
 
     }
 
     @Override
     public int getLastTicketId() {
-        JsonObject bans = gson.fromJson(gson.toJson(customFiles.getTicketsFile()), JsonObject.class);
+        JsonObject tickets = gson.fromJson(gson.toJson(customFiles.getTicketsFile()), JsonObject.class);
 
-        JsonArray ids = bans.getAsJsonArray("tickets");
-
-        return ids.size();
+        return tickets.has("latestId") ? tickets.get("latestId").getAsInt() : 0;
     }
 
     @Override
